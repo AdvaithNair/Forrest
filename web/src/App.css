@@ -1,0 +1,125 @@
+.App {
+  text-align: center;
+}
+
+.link {
+  color: #000081;
+}
+
+.link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.loading-body {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  margin: 0 auto;
+}
+
+.landing-background {
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.landing-icon {
+  width: 200px;
+  height: 200px;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+.fade-animation {
+  -webkit-animation: fadeOut 2s;
+  animation: fadeOut 2s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.hover:hover {
+  cursor: pointer;
+}
+
+.profile-card-image-container {
+  position: relative;
+  height: 250px;
+  width: 250px;
+  border-radius: 100%;
+  margin: 0 auto;
+}
+
+.profile-card-image {
+  display: block;
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+  border: solid 5px black;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+.profile-card-image:hover {
+  opacity: 0.5;
+}
+
+.profile-card-image-overlay {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  width: 200px;
+  border-radius: 100%;
+  opacity: 0;
+  transition: .2s ease;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.profile-card-image-container:hover .profile-card-image-overlay {
+  opacity: 1;
+}
