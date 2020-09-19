@@ -32,7 +32,8 @@ interface DataPoints {
 interface RouteData {
   route: string;
   efficiency: number;
-  latLon?: Array<DataPoints>
+  latLon?: Array<DataPoints>;
+  directions?: Array<string>;
 }
 
 //Computes number of gallons used over a set distance and time from mph and mpg
@@ -119,7 +120,8 @@ const getRouteOptions = async (
               ), //Convert the seconds of the whole route without traffic into a minute double
               distance: metersToMiles(route['legs'][0]['distance']['value']),
               fuelConsumption: 0, //Start assuming 0 fuel use
-              latLon: []
+              latLon: [{lat: route['legs'][0]['steps'][0]['start_location']['lat'], lng:route['legs'][0]['steps'][0]['start_location']['lng']}],
+              directions: []
             };
           } catch (error) {
             //console.log(error);
@@ -133,7 +135,8 @@ const getRouteOptions = async (
               ),
               distance: metersToMiles(route['legs'][0]['distance']['value']),
               fuelConsumption: 0,
-              latLon: []
+              latLon: [{lat: route['legs'][0]['steps'][0]['start_location']['lat'], lng:route['legs'][0]['steps'][0]['start_location']['lng']}],
+              directions: []
             };
           }
         } else { //This code runs if the route has already been established in the dict in another loop
@@ -164,6 +167,8 @@ const getRouteOptions = async (
 
           if (routes[routeName]['count'] == 1) {
             routes[routeName]['latLon'].push({lat: step['end_location']['lat'], lng:step['end_location']['lng']})
+            routes[routeName]['directions'].push(step['html_instructions'])
+            //console.log(step['html_instructions'])
           }
 
           try {
@@ -266,19 +271,13 @@ export const getBestRoutes = async (_req: Request, res: Response) => {
         };
     }
 
-    let pathStr = "";
-    for (let item of routes[bestEfficiency.route]['latLon']) {
-      pathStr = pathStr.concat(item.lat.toString(),',',item.lng.toString(),'|')
-    }
-    pathStr = pathStr.slice(0, -1);
-    console.log(pathStr);
-
     let newArrayEfficiency = [];
     const snappedDictEfficiency = await roadSnapRequest(routes[bestEfficiency.route]['latLon']);
     for (let item of snappedDictEfficiency['snappedPoints']) {
       newArrayEfficiency.push({lat: item['location']['latitude'], lng:item['location']['longitude']})
     }
     bestEfficiency.latLon = newArrayEfficiency;
+    bestEfficiency.directions = routes[bestEfficiency.route]['directions'];
 
     let newArrayFastest = [];
     const snappedDictFastest = await roadSnapRequest(routes[fastestRoute.route]['latLon']);
@@ -286,6 +285,7 @@ export const getBestRoutes = async (_req: Request, res: Response) => {
       newArrayFastest.push({lat: item['location']['latitude'], lng:item['location']['longitude']})
     }
     fastestRoute.latLon = newArrayFastest;
+    fastestRoute.directions = routes[fastestRoute.route]['directions']
 
     const efficiency = {
       slowestRoute,
