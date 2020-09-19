@@ -22,7 +22,7 @@ const mapsRequest = async (
 
     // Make Request and Assign to Return Object
     const response = await axios.get(MAPS_API.ROUTE, { params });
-
+    //console.log(response.request);
     return response.data;
   } catch (error) {
     console.log(error);
