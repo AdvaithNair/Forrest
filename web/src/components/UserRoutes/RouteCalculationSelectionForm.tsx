@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { Button, Grid } from '@material-ui/core';
+import {Box, Button, Grid, LinearProgress} from '@material-ui/core';
 import {
   CRYPTO_JS_SECRETS,
   ERRORS,
   LOCALSTORAGE,
-  ReducerContext
+  ReducerContext,
+  COLORS
 } from '@app/common';
 import { UserContext } from '../../context/context';
 import axios from '../../utils/axios';
@@ -14,35 +15,29 @@ import STATE from '../../context/state';
 import CustomSnackbar from '../General/Utility/Snackbar';
 import SmallPassword from '../General/Entry/PasswordSmall';
 import TextEntry from "../General/Entry/TextEntry";
-
+import CO2FactCard from "./CO2FactCard";
 
 interface Props {
   onEditStart: any;
   onEditEnd: any;
 }
 
-const RouteSelectionForm: React.FC<Props> = ({onEditStart, onEditEnd}) =>{
+
+const RouteCalculationForm: React.FC<Props> = ({onEditStart, onEditEnd}) =>{
   const { dispatch } = useContext<ReducerContext>(UserContext);
 
-  const [open, setOpen] = useState<string>('');
+  const [routesFound, setRoutesFound] = useState<boolean>(false);
 
   const handleSubmit = () => {
     console.log("Submitting form")
   }
 
   return (
-    <form noValidate onSubmit={handleSubmit}>
-      <Grid
-        container
-        direction='row'
-        justify='space-evenly'
-        alignItems='center'
-      >
-        <TextEntry onChange={onEditStart} helperText={'Put your current/starting location'} label={'Start'} required={true} fullWidth={true} error={false}/>
-        <TextEntry onChange={onEditEnd} helperText={'Put your ending location'} label={'Start'} required={true} fullWidth={true} error={false}/>
-      </Grid>
-    </form>
+      <Box m={2} display={routesFound ? 'none' : 'block'}>
+        <LinearProgress />
+        <CO2FactCard />
+      </Box>
   );
 };
 
-export default RouteSelectionForm;
+export default RouteCalculationForm;
