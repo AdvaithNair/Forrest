@@ -39,7 +39,7 @@ const RouteSelectionForm: React.FC<Props> = ({onEditStart, onEditEnd}) =>{
         alignItems='center'
       >
         <TextEntry onChange={onEditStart} helperText={'Put your current/starting location'} label={'Start'} required={true} fullWidth={true} error={false}/>
-        <TextEntry onChange={onEditEnd} helperText={'Put your ending location'} label={'Start'} required={true} fullWidth={true} error={false}/>
+        <TextEntry onChange={onEditEnd} helperText={'Put your ending location'} label={'End'} required={true} fullWidth={true} error={false}/>
       </Grid>
     </form>
   );
