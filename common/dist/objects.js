@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CAR_TYPES = exports.USER_DRIVE_DEFAULTS = exports.FILE_UPLOADS = exports.LOCALSTORAGE = exports.COLORS = exports.ERRORS = exports.TOKEN_DURATIONS = exports.COOKIE_NAMES = exports.USER_ROLES = void 0;
 exports.USER_ROLES = {
     USER: 'USER',
     ADMIN: 'ADMIN',
@@ -49,6 +50,11 @@ exports.ERRORS = {
     FILE_UPLOAD: {
         NO_FILE: 'Please Upload File',
         FILENAME: 'Invalid File Name'
+    },
+    LOG: {
+        CREATE: 'Unable to Create Route Entry',
+        CONFIRM: 'Unable to Confirm Route Entry',
+        NOT_FOUND: 'Route Entry Not Found'
     }
 };
 exports.COLORS = {

@@ -30,4 +30,25 @@ export interface UserCredentials {
   firstName: string;
   lastName: string;
   imageURL: string;
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  snapchat: string;
+  carType: string;
+  avgHighwayOver: number;
+  avgCityOver: number;
+  carbonSaved: number;
+  routesTaken: number;
+  routeLogs: RouteLog[];
+}
+
+export interface RouteLog {
+  userID: number;
+  route: string;
+  date: string;
+  carType: string;
+  avgHighwayOver: number;
+  avgCityOver: number;
+  carbonSaved: number;
+  verified: boolean;
 }

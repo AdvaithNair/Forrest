@@ -52,6 +52,23 @@ userRouter.put(
 );
 
 // Update Drive Info
-userRouter.put('/update/drive', tokenController.validateUser, userController.updateDriveInfo);
+userRouter.put(
+  '/update/drive',
+  tokenController.validateUser,
+  userController.updateDriveInfo
+);
+
+// Add to Log of Routes Taken
+userRouter.post(
+  '/log/add',
+  tokenController.validateUser,
+  userController.addRoute
+);
+
+userRouter.put(
+  '/log/confirm',
+  tokenController.validateUser,
+  userController.confirmRoute
+);
 
 export default userRouter;

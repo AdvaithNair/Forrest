@@ -48,6 +48,11 @@ export declare const ERRORS: {
         NO_FILE: string;
         FILENAME: string;
     };
+    LOG: {
+        CREATE: string;
+        CONFIRM: string;
+        NOT_FOUND: string;
+    };
 };
 export declare const COLORS: {
     PRIMARY: string;

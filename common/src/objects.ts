@@ -50,6 +50,11 @@ export const ERRORS = {
   FILE_UPLOAD: {
     NO_FILE: 'Please Upload File',
     FILENAME: 'Invalid File Name'
+  },
+  LOG: {
+    CREATE: 'Unable to Create Route Entry',
+    CONFIRM: 'Unable to Confirm Route Entry',
+    NOT_FOUND: 'Route Entry Not Found'
   }
 };
 

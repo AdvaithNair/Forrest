@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt';
 import { BCRYPT_SALT, ERRORS, COOKIE_NAMES, BUCKET_URL } from '@app/common';
 import User from '../entities/user';
 import { getConnection } from 'typeorm';
+import parseUser from '../utils/parseUser';
+import RouteLog from '../entities/routeLog';
 
 const checkCreds = async (res: Response, email: string) => {
   try {
@@ -61,6 +63,8 @@ export const signup = async (
       lastName
     }).save();
     delete user.password;
+    delete user.role;
+    delete user.count;
 
     // Sets Payload of res.locals
     res.locals = {
@@ -175,40 +179,16 @@ export const updateUser = async (req: Request, res: Response) => {
 export const getOwnInfo = async (_req: Request, res: Response) => {
   try {
     // Gets User
-    const user = await User.findOne(res.locals.payload.id);
-
-    // Removes Secrets
-    delete user!.password;
-    delete user!.role;
-    delete user!.count;
+    const user = await parseUser(res.locals.payload.id, ['routeLogs']);
 
     res.json(user);
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       error: ERRORS.AUTH.USER_NOT_FOUND
     });
   }
 };
-
-// Verification Message Sent
-/* export const verifyUser = async (_req: Request, res: Response) => {
-  try {
-    const { id } = res.locals.payload;
-
-    // Get User Data
-    const user = await User.findOne(id);
-    if (!user) throw new Error();
-    delete user.password;
-    delete user.count;
-    delete user.role;
-
-    res.json(user);
-  } catch {
-    res.status(400).json({
-      id: -1
-    });
-  }
-}; */
 
 // Upload Image
 export const uploadProfilePicture = async (req: Request, res: Response) => {
@@ -276,6 +256,7 @@ export const linkSocialMedia = async (req: Request, res: Response) => {
   }
 };
 
+// User Drive Information Updates
 export const updateDriveInfo = async (req: Request, res: Response) => {
   try {
     const { id } = res.locals.payload;
@@ -302,6 +283,75 @@ export const updateDriveInfo = async (req: Request, res: Response) => {
     console.log(error);
     res.status(400).json({
       error: ERRORS.UPDATE_USER.DRIVE_INFO
+    });
+  }
+};
+
+// Log A Route to User
+export const addRoute = async (req: Request, res: Response) => {
+  try {
+    const { id } = res.locals.payload;
+    const { route, carbonSaved } = req.body;
+
+    // Get User
+    const userData = await parseUser(id);
+    if (!userData) throw new Error();
+
+    // Create Log Entry
+    const logEntry = new RouteLog();
+    logEntry.route = route;
+    logEntry.userID = id;
+    logEntry.carbonSaved = carbonSaved;
+    logEntry.carType = userData.carType;
+    logEntry.avgHighwayOver = userData.avgHighwayOver;
+    logEntry.avgCityOver = userData.avgCityOver;
+    logEntry.date = new Date().toISOString();
+    logEntry.verified = false;
+    logEntry.user = userData;
+    logEntry.save();
+
+    // Prepare Output
+    const { user, ...rest } = logEntry;
+    res.json({ ...rest });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: ERRORS.LOG.CREATE
+    });
+  }
+};
+
+// Confirm Logged Route
+export const confirmRoute = async (req: Request, res: Response) => {
+  try {
+    const { id } = res.locals.payload;
+    const { route } = req.body;
+
+    // Get Log Entry
+    const logEntry = await RouteLog.findOne({
+      where: { userID: id, route, verified: false }
+    });
+    if (!logEntry) throw new Error();
+
+    // Update Log Entry
+    logEntry.verified = true;
+    logEntry.save();
+
+    // Prepare Log Entry
+    delete logEntry.user;
+
+    // Update User Entry
+    const user = await parseUser(id);
+    if (!user) throw new Error();
+    user.routesTaken += 1;
+    user.carbonSaved += logEntry.carbonSaved;
+    user.save();
+
+    res.json(logEntry);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: ERRORS.LOG.CONFIRM
     });
   }
 };

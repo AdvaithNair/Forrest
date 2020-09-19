@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import {
   Button,
@@ -21,11 +21,7 @@ import Dropzone from 'react-dropzone-uploader';
 
 const UploadPhoto = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [key, setKey] = useState<number>(Date.now());
   const { state, dispatch } = useContext<ReducerContext>(UserContext);
-  const [source, setSource] = useState<string>(
-    `${state.user.imageURL}?v=${key}`
-  );
 
   const handleOpen = () => {
     setOpen(true);
@@ -36,8 +32,6 @@ const UploadPhoto = () => {
   };
 
   const submitPhoto = (files: any) => {
-    console.log(files);
-    console.log('OLD: ' + state.user.imageURL);
     if (files[0]) {
       const formData = new FormData();
       const upload_file = files[0].file;
@@ -46,15 +40,12 @@ const UploadPhoto = () => {
         .post('/api/user/upload-profile-picture', formData)
         .then((res: any) => {
           setLoading(dispatch);
-          dispatch({ type: STATE.SET_UPLOAD_IMAGE, payload: res.data });
+          dispatch({
+            type: STATE.SET_UPLOAD_IMAGE,
+            payload: res.data.imageURL
+          });
           clearLoading(dispatch);
           setOpen(false);
-          setTimeout(() => {
-            setSource(
-              'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg'
-            );
-            setSource(`${state.user.imageURL}?v=${Date.now()}`);
-          }, 500);
         })
         .catch((error: any) => {
           console.log(error);
@@ -103,8 +94,8 @@ const UploadPhoto = () => {
           <div className='profile-card-image-container' onClick={handleOpen}>
             <img
               className='profile-card-image'
-              src={source}
-              key={key}
+              src={`${state.user.imageURL}?v=${Date.now()}`}
+              key={Date.now()}
               alt={state.user.username}
             ></img>
             <div className='profile-card-image-overlay'>
