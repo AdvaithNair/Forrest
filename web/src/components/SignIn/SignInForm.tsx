@@ -58,6 +58,7 @@ const SignInForm = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (filterInput()) {
+      console.log(input);
       axios
         .post('/api/user/signin', input)
         .then((res: AxiosResponse) => {

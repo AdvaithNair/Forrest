@@ -3,6 +3,7 @@
 ## Types
 
 - User
+
   - id
   - email
   - username
@@ -13,6 +14,23 @@
   - instagram
   - twitter
   - snapchat
+  - carType
+  - avgHighwayOver
+  - avgCityOver
+  - carbonSaved
+  - routesTaken
+  - routeLogs (Type RouteLog)
+
+- RouteLog
+  - id (at times)
+  - userID
+  - route
+  - date
+  - carType
+  - avgHighwayOver
+  - avgCityOver
+  - carbonSaved
+  - verified
 
 ## Routes
 
@@ -39,7 +57,7 @@ GET: Returns User's Own User Info.
   - User
 
 ```
-/api/signup
+/signup
 ```
 
 POST: Signs Up and Creates User. Returns User Info and Authentication Token Cookies.
@@ -54,7 +72,7 @@ POST: Signs Up and Creates User. Returns User Info and Authentication Token Cook
   - User
 
 ```
-/api/signin
+/signin
 ```
 
 POST: Signs In User. Returns User Info and Authentication Token Cookies.
@@ -66,7 +84,7 @@ POST: Signs In User. Returns User Info and Authentication Token Cookies.
   - User
 
 ```
-/api/signout
+/signout
 ```
 
 POST: Signs Out User. Returns Success Message.
@@ -77,7 +95,7 @@ POST: Signs Out User. Returns Success Message.
   - message
 
 ```
-/api/update
+/update
 ```
 
 PUT: Updates User Info. Returns Updated User Info.
@@ -91,7 +109,7 @@ PUT: Updates User Info. Returns Updated User Info.
   - User
 
 ```
-/api/upload-profile-picture
+/upload-profile-picture
 ```
 
 POST: Uploads Profile Picture to Server. Returns New Image URL.
@@ -102,7 +120,7 @@ POST: Uploads Profile Picture to Server. Returns New Image URL.
   - imageURL
 
 ```
-/api/update/social-media
+/update/social-media
 ```
 
 PUT: Updates User Social Media. Returns User.
@@ -114,7 +132,7 @@ PUT: Updates User Social Media. Returns User.
   - User
 
 ```
-/api/update/drive
+/update/drive
 ```
 
 PUT: Updates User Drive Info. Returns User.
@@ -126,3 +144,26 @@ PUT: Updates User Drive Info. Returns User.
     - avgCityOver (number, average MPH above city user drives)
 - Returns
   - User
+
+```
+/user/log/add
+```
+
+POST: Adds Route to Log. Returns New Log Entry.
+
+- Parameters
+  - route (string description of route)
+  - carbonSaved (number of lbs of CO2 saved)
+- Returns
+  - RouteLog
+
+```
+/user/log/confirm
+```
+
+PUT: Confirms (verifies) Log with Given Route. Returns Updated Log Entry.
+
+- Parameters
+  - route (string description of route)
+- Returns
+  - RouteLog

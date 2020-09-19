@@ -1,5 +1,6 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { BUCKET_URL, USER_ROLES, USER_DRIVE_DEFAULTS } from '@app/common';
+import RouteLog from './routeLog';
 
 @Entity()
 export default class User extends BaseEntity {
@@ -55,4 +56,10 @@ export default class User extends BaseEntity {
 
   @Column({ default: 0 })
   carbonSaved: number;
+
+  @Column({ default: 0 })
+  routesTaken: number;
+
+  @OneToMany(() => RouteLog, routeLog => routeLog.user)
+  routeLogs: RouteLog[];
 }
