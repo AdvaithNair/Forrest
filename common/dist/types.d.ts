@@ -9,6 +9,7 @@ export interface GlobalState {
     loading: boolean;
     isSignup: boolean;
     darkMode: boolean;
+    currentPage: string;
     user: UserCredentials;
 }
 export interface ReducerContext {

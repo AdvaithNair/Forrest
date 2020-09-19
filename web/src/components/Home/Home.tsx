@@ -3,6 +3,8 @@ import BasicAppBar from '../General/Utility/BasicAppBar';
 import { COLORS, ReducerContext } from '@app/common';
 import { UserContext } from '../../context/context';
 import UserSettingsBox from '../UserChangeScreen/UserSettingsBox';
+import SignInContainer from "../SignIn/SignInContainer";
+import ResourcesBox from "../ResourcesPage/ResourcesBox";
 
 const MainPage = () => {
   const { state } = useContext<ReducerContext>(UserContext);
@@ -14,6 +16,13 @@ const MainPage = () => {
     document.body.style.background = backgroundStr;
   }, []);
 
+    let renderPage;
+    if (state.currentPage == 'settings') {
+        renderPage = <UserSettingsBox />
+    } else if (state.currentPage == 'resources') {
+        renderPage = <ResourcesBox />
+    }
+
   return (
     <div>
       <BasicAppBar
@@ -21,7 +30,7 @@ const MainPage = () => {
         route={''}
         title={'INSERT TITLE HERE'}
       />
-      <UserSettingsBox />
+        {renderPage}
     </div>
   );
 };

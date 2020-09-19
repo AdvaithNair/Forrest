@@ -9,6 +9,8 @@ import { clearLoading, setLoading } from '../../../context/loading';
 import STATE from '../../../context/state';
 import axios from '../../../utils/axios';
 import HeaderLogo from '../../../images/Branding/HeaderLogo.png'
+import MenuIcon from '@material-ui/icons/Menu';
+import BasicDrawer from "./BasicDrawer";
 
 interface Props {
   buttonText: string;
@@ -20,13 +22,10 @@ const BasicAppBar: React.FC<Props> = ({ title, buttonText, route }) => {
   const { dispatch } = useContext<ReducerContext>(UserContext);
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const openDrawer = () => {
+    setOpen(!open);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleSubmit = () => {
     axios
@@ -45,6 +44,7 @@ const BasicAppBar: React.FC<Props> = ({ title, buttonText, route }) => {
 
   return (
     <div>
+      <BasicDrawer open={open} onClick={openDrawer}/>
       <AppBar position='static'>
         <Toolbar>
           <Grid
@@ -52,7 +52,12 @@ const BasicAppBar: React.FC<Props> = ({ title, buttonText, route }) => {
               justify='space-between' container>
             <Grid item>
               <Box marginTop={.5}>
+                <Grid
+                    alignItems='center'
+                    justify='space-between' container>
+                <MenuIcon fontSize={'large'} onClick={openDrawer} />
                 <img src={HeaderLogo}  height={55}/>
+                </Grid>
               </Box>
             </Grid>
             <Grid item>
