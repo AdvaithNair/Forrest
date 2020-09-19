@@ -8,6 +8,7 @@ export interface GlobalState {
     authenticated: boolean;
     loading: boolean;
     isSignup: boolean;
+    darkMode: boolean;
     user: UserCredentials;
 }
 export interface ReducerContext {

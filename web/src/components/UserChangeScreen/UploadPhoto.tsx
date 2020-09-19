@@ -102,7 +102,7 @@ const UploadPhoto = () => {
       </Dialog>
       <Grid container direction='row' justify='center' alignItems='center'>
         <Hidden mdUp>
-          {/*<Tooltip
+          {<Tooltip
             title='Upload Profile Picture'
             arrow
             onClick={handleClickOpen}
@@ -113,7 +113,7 @@ const UploadPhoto = () => {
               width={85}
               height={85}
             />
-          </Tooltip>*/}
+          </Tooltip>}
         </Hidden>
         <Hidden smDown>
           {/*<Tooltip

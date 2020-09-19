@@ -7,6 +7,7 @@ export const initialState: GlobalState = {
   authenticated: false,
   loading: false,
   isSignup: false,
+  darkMode: true,
   user: {
     id: -1,
     email: '',
