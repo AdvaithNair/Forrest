@@ -42,6 +42,7 @@ export declare const ERRORS: {
     UPDATE_USER: {
         UNABLE: string;
         SOCIAL_MEDIA: string;
+        DRIVE_INFO: string;
     };
     FILE_UPLOAD: {
         NO_FILE: string;
@@ -59,4 +60,18 @@ export declare const LOCALSTORAGE: {
 };
 export declare const FILE_UPLOADS: {
     PROFILE_PICTURE: string;
+};
+export declare const USER_DRIVE_DEFAULTS: {
+    VEHICLE_TYPE: string;
+    AVERAGE_MPH_OVER_HIGHWAY: number;
+    AVERAGE_MPH_OVER_CITY: number;
+};
+export declare const CAR_TYPES: {
+    SEDAN: string;
+    HYBRID_SEDAN: string;
+    TRUCK: string;
+    VAN: string;
+    SUV: string;
+    MOTORCYCLE: string;
+    ELECTRIC: string;
 };

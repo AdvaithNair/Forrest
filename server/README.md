@@ -39,16 +39,7 @@ GET: Returns User's Own User Info.
   - User
 
 ```
-/verify
-```
-
-GET: Returns User Info.
-
-- Returns
-  - User
-
-```
-/signup
+/api/signup
 ```
 
 POST: Signs Up and Creates User. Returns User Info and Authentication Token Cookies.
@@ -63,7 +54,7 @@ POST: Signs Up and Creates User. Returns User Info and Authentication Token Cook
   - User
 
 ```
-/signin
+/api/signin
 ```
 
 POST: Signs In User. Returns User Info and Authentication Token Cookies.
@@ -75,7 +66,7 @@ POST: Signs In User. Returns User Info and Authentication Token Cookies.
   - User
 
 ```
-/signout
+/api/signout
 ```
 
 POST: Signs Out User. Returns Success Message.
@@ -86,7 +77,7 @@ POST: Signs Out User. Returns Success Message.
   - message
 
 ```
-/update
+/api/update
 ```
 
 PUT: Updates User Info. Returns Updated User Info.
@@ -100,7 +91,7 @@ PUT: Updates User Info. Returns Updated User Info.
   - User
 
 ```
-/upload-profile-picture
+/api/upload-profile-picture
 ```
 
 POST: Uploads Profile Picture to Server. Returns New Image URL.
@@ -111,7 +102,7 @@ POST: Uploads Profile Picture to Server. Returns New Image URL.
   - imageURL
 
 ```
-/update/social-media
+/api/update/social-media
 ```
 
 PUT: Updates User Social Media. Returns User.
@@ -119,5 +110,19 @@ PUT: Updates User Social Media. Returns User.
 - Parameters
   - provider (Social Media Type: Facebook, Instagram, Twitter, Snapchat)
   - username (Username for designated Social Media)
+- Returns
+  - User
+
+```
+/api/update/drive
+```
+
+PUT: Updates User Drive Info. Returns User.
+
+- Parameters
+  - parameters (Object containing any of the following three parameters)
+    - carType (string, type of car user drives)
+    - avgHighwayOver (number, average MPH above highway speed user drives)
+    - avgCityOver (number, average MPH above city user drives)
 - Returns
   - User

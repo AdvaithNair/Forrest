@@ -51,4 +51,7 @@ userRouter.put(
   userController.linkSocialMedia
 );
 
+// Update Drive Info
+userRouter.put('/update/drive', tokenController.validateUser, userController.updateDriveInfo);
+
 export default userRouter;
