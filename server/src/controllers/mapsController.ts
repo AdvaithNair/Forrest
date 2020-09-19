@@ -14,6 +14,7 @@ import {
   metersToMiles,
   secondsToHours
 } from '../utils/conversions';
+import roadSnapRequest from "../utils/roadSnap";
 
 const TEST_INFO = {
   origin: '210 Euclid Ave, Delaware OH 43015',
@@ -23,9 +24,15 @@ const TEST_INFO = {
   avgCityOver: 0
 };
 
+interface DataPoints {
+  lat: number;
+  lng: number;
+}
+
 interface RouteData {
   route: string;
   efficiency: number;
+  latLon?: Array<DataPoints>
 }
 
 //Computes number of gallons used over a set distance and time from mph and mpg
@@ -111,7 +118,8 @@ const getRouteOptions = async (
                 route['legs'][0]['duration']['value']
               ), //Convert the seconds of the whole route without traffic into a minute double
               distance: metersToMiles(route['legs'][0]['distance']['value']),
-              fuelConsumption: 0 //Start assuming 0 fuel use
+              fuelConsumption: 0, //Start assuming 0 fuel use
+              latLon: []
             };
           } catch (error) {
             //console.log(error);
@@ -124,7 +132,8 @@ const getRouteOptions = async (
                 route['legs'][0]['duration']['value']
               ),
               distance: metersToMiles(route['legs'][0]['distance']['value']),
-              fuelConsumption: 0
+              fuelConsumption: 0,
+              latLon: []
             };
           }
         } else { //This code runs if the route has already been established in the dict in another loop
@@ -152,6 +161,11 @@ const getRouteOptions = async (
             avgHighwayOver,
             avgCityOver
           );
+
+          if (routes[routeName]['count'] == 1) {
+            routes[routeName]['latLon'].push({lat: step['end_location']['lat'], lng:step['end_location']['lng']})
+          }
+
           try {
             //If the end intersection is a stop of some form, add a gas use penalty
             if (INTERSECTION_TYPES.includes(step['maneuver'])) {
@@ -251,6 +265,27 @@ export const getBestRoutes = async (_req: Request, res: Response) => {
             100
         };
     }
+
+    let pathStr = "";
+    for (let item of routes[bestEfficiency.route]['latLon']) {
+      pathStr = pathStr.concat(item.lat.toString(),',',item.lng.toString(),'|')
+    }
+    pathStr = pathStr.slice(0, -1);
+    console.log(pathStr);
+
+    let newArrayEfficiency = [];
+    const snappedDictEfficiency = await roadSnapRequest(routes[bestEfficiency.route]['latLon']);
+    for (let item of snappedDictEfficiency['snappedPoints']) {
+      newArrayEfficiency.push({lat: item['location']['latitude'], lng:item['location']['longitude']})
+    }
+    bestEfficiency.latLon = newArrayEfficiency;
+
+    let newArrayFastest = [];
+    const snappedDictFastest = await roadSnapRequest(routes[fastestRoute.route]['latLon']);
+    for (let item of snappedDictFastest['snappedPoints']) {
+      newArrayFastest.push({lat: item['location']['latitude'], lng:item['location']['longitude']})
+    }
+    fastestRoute.latLon = newArrayFastest;
 
     const efficiency = {
       slowestRoute,

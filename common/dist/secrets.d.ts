@@ -8,4 +8,5 @@ export declare const CRYPTO_JS_SECRETS: {
 export declare const MAPS_API: {
     KEY: string;
     ROUTE: string;
+    SNAP_ROUTE: string;
 };

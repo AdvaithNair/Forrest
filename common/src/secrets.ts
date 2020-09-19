@@ -12,5 +12,6 @@ export const CRYPTO_JS_SECRETS = {
 
 export const MAPS_API = {
   KEY: 'AIzaSyB7rdgDneAwZCMhe6PXg2KwAolFSDEQ4-w',
-  ROUTE: 'https://maps.googleapis.com/maps/api/directions/json'
+  ROUTE: 'https://maps.googleapis.com/maps/api/directions/json',
+  SNAP_ROUTE: 'https://roads.googleapis.com/v1/snapToRoads'
 };

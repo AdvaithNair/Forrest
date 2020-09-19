@@ -9,6 +9,7 @@ exports.CRYPTO_JS_SECRETS = {
 };
 exports.MAPS_API = {
     KEY: 'AIzaSyB7rdgDneAwZCMhe6PXg2KwAolFSDEQ4-w',
-    ROUTE: 'https://maps.googleapis.com/maps/api/directions/json'
+    ROUTE: 'https://maps.googleapis.com/maps/api/directions/json',
+    SNAP_ROUTE: 'https://roads.googleapis.com/v1/snapToRoads'
 };
 //# sourceMappingURL=secrets.js.map
