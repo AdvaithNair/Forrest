@@ -7,16 +7,15 @@ import LanguageIcon from '@material-ui/icons/Language';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import FilterDramaIcon from '@material-ui/icons/FilterDrama';
+import SpeedIcon from '@material-ui/icons/Speed';
 
 interface Props {
-    data: number;
-    max: number;
+    text: string
     title: string;
     icon: any;
     iconBackground: string;
-    unit: string;
-    barUnit: string;
 }
 
 
@@ -24,29 +23,26 @@ interface Props {
 function LinearProgressWithLabel(props: any) {
     return (
         <Box display="flex" alignItems="center">
-            <Box width="90%" mr={1}>
+            <Box width="100%" mr={1}>
                 <LinearProgress variant="determinate" {...props} />
-            </Box>
-            <Box minWidth={35}>
-                <Typography variant="body2" color="textSecondary">{`${Math.round(
-                    props.value,
-                )} ${props.barUnit}`}</Typography>
             </Box>
         </Box>
     );
 }
 
-const SmallDataCard: React.FC<Props> = ({data, max, unit, barUnit, title, icon, iconBackground}) => {
+const SmallTextCard: React.FC<Props> = ({title, icon, iconBackground, text}) => {
     const {state, dispatch} = useContext<ReducerContext>(UserContext);
-
-    const normalise = ({value}: { value: number }) => (value - 0) * 100 / (max - 0);
 
     let iconType;
     if (icon == 'nature') {
         iconType = <NaturePeopleIcon/>
     } else if (icon == 'cloud') {
         iconType = <FilterDramaIcon/>
-    } else {
+    } else if (icon == 'drive') {
+        iconType = <DriveEtaIcon/>
+    } else if (icon == 'speed') {
+        iconType = <SpeedIcon/>
+    }  else {
         iconType = <ShowChartIcon/>
     }
 
@@ -62,13 +58,13 @@ const SmallDataCard: React.FC<Props> = ({data, max, unit, barUnit, title, icon, 
                         {title}
                     </Typography>
                     <Typography color="textSecondary" gutterBottom>
-                        {data} / {max} {unit}
+                        {(text.charAt(0).toUpperCase() + text.slice(1).toLowerCase())}
                     </Typography>
-                    <LinearProgressWithLabel value={normalise({value: data})} barUnit={barUnit} />
+                    <LinearProgressWithLabel value={100} />
                 </CardContent>
             </Card>
         </Box>
     );
 };
 
-export default SmallDataCard;
+export default SmallTextCard;

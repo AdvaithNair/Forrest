@@ -82,4 +82,7 @@ exports.CAR_TYPES = {
     MOTORCYCLE: 'MOTORCYCLE',
     ELECTRIC: 'ELECTRIC'
 };
+exports.CARBON_SAVINGS = {
+    CARBON_PER_TREE: 500
+};
 //# sourceMappingURL=objects.js.map

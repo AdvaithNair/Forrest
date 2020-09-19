@@ -1,5 +1,5 @@
 import { ReducerContext } from '@app/common';
-import { Grid, Button, Toolbar } from '@material-ui/core';
+import {Grid, Button, Toolbar, Hidden} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import React, { useContext } from 'react';
 import { UserContext } from '../../context/context';
@@ -29,7 +29,7 @@ const HomePage = () => {
   };
 
   return (
-    <div style={{ display: "block",height: "auto", width: '100vw', overflowY: 'auto' }}>
+    <Box style={{ display: "block",height: "100vh", width: '100vw', overflowY: 'auto' }}>
       <AppBar position='static' style={{ backgroundColor: 'black' }}>
         <Toolbar style={{ backgroundColor: 'black' }}>
           <Grid alignItems='center' justify='space-between' container>
@@ -84,6 +84,7 @@ const HomePage = () => {
               image={treeSplash}
             />
           </Grid>
+          <Hidden smDown>
           <Grid item md>
             <BasicHomepageCard
               desc1={
@@ -98,9 +99,10 @@ const HomePage = () => {
               image={aboutSplash}
             />
           </Grid>
+          </Hidden>
         </Grid>
       </Box>
-    </div>
+    </Box>
   );
 };
 

@@ -90,3 +90,7 @@ export const CAR_TYPES = {
   MOTORCYCLE: 'MOTORCYCLE',
   ELECTRIC: 'ELECTRIC'
 };
+
+export const CARBON_SAVINGS = {
+  CARBON_PER_TREE: 500
+}

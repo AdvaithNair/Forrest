@@ -24,6 +24,7 @@ interface UserInfo {
   general?: string;
 }
 
+
 const blankErrors: UserInfo = {
   email: '',
   username: '',

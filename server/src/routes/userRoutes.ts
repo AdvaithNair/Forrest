@@ -58,7 +58,7 @@ userRouter.put(
   userController.updateDriveInfo
 );
 
-// Add to Log of Routes Taken
+// Add to Log of UserRoutes Taken
 userRouter.post(
   '/log/add',
   tokenController.validateUser,

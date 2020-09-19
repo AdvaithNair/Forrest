@@ -80,3 +80,6 @@ export declare const CAR_TYPES: {
     MOTORCYCLE: string;
     ELECTRIC: string;
 };
+export declare const CARBON_SAVINGS: {
+    CARBON_PER_TREE: number;
+};
