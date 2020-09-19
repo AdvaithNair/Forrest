@@ -73,7 +73,7 @@ const UserAppSpecificSettings = () => {
                       direction='row'
                       justify='space-evenly'
                       alignItems='center'>
-                    <Grid item sm>
+                    <Grid item md={4}>
                         <Typography id="continuous-slider">
                             Speed Over Limit on Highway
                         </Typography>
@@ -87,7 +87,7 @@ const UserAppSpecificSettings = () => {
                             valueLabelDisplay="auto"
                         />
                     </Grid>
-                    <Grid item sm>
+                    <Grid item md={4}>
                         <Typography id="continuous-slider">
                             Speed Over Limit in City
                         </Typography>
