@@ -21,20 +21,21 @@ interface RouteData {
 interface Props {
     currentDirection: number;
     polySet: any;
+    ecoMode: boolean;
 }
 
 
-const BasicMap: React.FC<Props> = ({currentDirection, polySet}) =>{
+const BasicMap: React.FC<Props> = ({currentDirection, polySet, ecoMode}) =>{
     const path = polySet;
     const directionPath = [path[currentDirection],path[currentDirection+1]];
 
     console.log(polySet)
 
     const options = {
-        strokeColor: '#FF0000',
+        strokeColor: ecoMode ? '#1ac900' : '#b34500',
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: '#FF0000',
+        fillColor: ecoMode ? '#1ac900' : '#b34500',
         fillOpacity: 0.35,
         clickable: false,
         draggable: false,
@@ -46,10 +47,10 @@ const BasicMap: React.FC<Props> = ({currentDirection, polySet}) =>{
     };
 
     const directionOptions = {
-        strokeColor: '#0a00ff',
+        strokeColor: '#000000',
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: '#0100ff',
+        fillColor: '#000000',
         fillOpacity: 0.35,
         clickable: false,
         draggable: false,

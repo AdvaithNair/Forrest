@@ -37,7 +37,7 @@ const DirectionBar: React.FC<Props> = ({directionList, currentDirection, onForwa
                 </Box>
                 </Hidden>
                 <Hidden smDown>
-                    <Box height={35}>
+                    <Box height={50}>
                         <Typography>{parse(dispString)}</Typography>
                     </Box>
                 </Hidden>

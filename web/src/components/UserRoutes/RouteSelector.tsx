@@ -156,7 +156,8 @@ const RouteSelector: React.FC<Props> = ({onArrival, dataFound}) => {
                 <Grid item sm>
                     <DirectionBar currentDirection={directionIndex} directionList={ecoRoute ? input.bestEfficiency.directions : input.fastestRoute.directions}
                                   onForward={directionForward} onBackward={directionBackward}/>
-                    <BasicMap currentDirection={directionIndex}
+                    <BasicMap ecoMode={ecoRoute}
+                        currentDirection={directionIndex}
                               polySet={ecoRoute ? input.bestEfficiency.latLon : input.fastestRoute.latLon}/>
                 </Grid>
             </Grid>
