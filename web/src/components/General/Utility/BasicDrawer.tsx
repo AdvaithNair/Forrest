@@ -32,6 +32,9 @@ const BasicDrawer: React.FC<Props> = ({ open, onClick }) => {
     return (
         <div>
             <Drawer
+                variant='temporary'
+                onBackdropClick={onClick}
+                onEscapeKeyDown={onClick}
                 anchor="left"
                 open={open}
             >
