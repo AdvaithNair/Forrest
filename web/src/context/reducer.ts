@@ -62,6 +62,16 @@ export const reducer = (state: any, action: any) => {
         ...state,
         currentPage: action.payload
       };
+    case STATE.VIEW_HOME_PAGE:
+      return {
+        ...state,
+        homePage: true
+      };
+    case STATE.VIEW_WEB_APP:
+      return {
+        ...state,
+        homePage: false
+      };
     default:
       return state;
   }

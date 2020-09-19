@@ -9,6 +9,7 @@ export interface User {
 export interface GlobalState {
   authenticated: boolean;
   loading: boolean;
+  homePage: boolean;
   isSignup: boolean;
   darkMode: boolean;
   currentPage: string;
