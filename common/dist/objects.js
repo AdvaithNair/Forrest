@@ -52,7 +52,7 @@ exports.ERRORS = {
     }
 };
 exports.COLORS = {
-    PRIMARY: '#5E3900',
+    PRIMARY: '#7E8D2B',
     SECONDARY: '#005B13',
     BUBBLY_START: '#7E8D2B',
     BUBBLY_STOP: '#005B13'
