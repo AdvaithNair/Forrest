@@ -37,7 +37,7 @@ const UserRoutesBox = () => {
         end: ""
     });
 
-    const [activeStep, setActiveStep] = React.useState<number>(0);
+    const [activeStep, setActiveStep] = React.useState<number>(1);
     const steps = getSteps();
 
     const doNothing = () => {
