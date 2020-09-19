@@ -3,15 +3,15 @@ import React from 'react';
 import SignInForm from './SignInForm';
 import { Grid } from '@material-ui/core';
 import Blurb from '../General/Misc/Blurb';
-import logo from '../../images/logo.png';
+import Logo from '../../images/Branding/Logo.png';
 
 const SignInBox = () => {
   return (
     <Box boxShadow={4} bgcolor='background.paper' m={4} p={4} borderRadius={8}>
       <img
         width='250'
-        src={logo}
-        alt='Logo'
+        src={Logo}
+        alt='Forrest'
         style={{ paddingBottom: '16px' }}
       />
       <Grid

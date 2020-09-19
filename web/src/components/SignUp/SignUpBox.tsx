@@ -3,7 +3,7 @@ import React from 'react';
 import SignUpForm from './SignUpForm';
 import { Grid, Hidden } from '@material-ui/core';
 import Blurb from '../General/Misc/Blurb';
-import logo from '../../images/logo.png';
+import Logo from '../../images/Branding/Logo.png';
 import { PROJECT_NAME } from '@app/common';
 
 const SignUpBox = () => {
@@ -11,8 +11,8 @@ const SignUpBox = () => {
     <Box boxShadow={4} bgcolor='background.paper' m={4} p={4} borderRadius={8}>
       <img
         width='250'
-        src={logo}
-        alt='Logo'
+        src={Logo}
+        alt='Forrest'
         style={{ paddingBottom: '10px' }}
       />
       <Grid

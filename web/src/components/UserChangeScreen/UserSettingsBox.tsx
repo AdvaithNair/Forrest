@@ -8,6 +8,7 @@ import UserChangeInfoForm from './UserChangeInfoForm';
 import UserPasswordUpdateForm from './UserPasswordUpdateForm';
 import UploadPhoto from './UploadPhoto';
 import SocialMediaGrid from './SocialMediaGrid';
+import UserAppSpecificSettings from "./UserAppSpecificSettings";
 
 const UserSettingsBox = () => {
   const { state, dispatch } = useContext<ReducerContext>(UserContext);
@@ -49,7 +50,7 @@ const UserSettingsBox = () => {
           <SocialMediaGrid />
         </Grid>
         <Grid item sm>
-          <Blurb headerText={'test'} dataText={'Section3'} />
+          <UserAppSpecificSettings />
         </Grid>
       </Grid>
       <Box m={2}>

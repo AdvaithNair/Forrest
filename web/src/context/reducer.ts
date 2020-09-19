@@ -52,6 +52,11 @@ export const reducer = (state: any, action: any) => {
           imageURL: action.payload
         }
       };
+    case STATE.TOGGLE_DARK_MODE:
+      return {
+        ...state,
+        darkMode: !state.darkMode
+      };
     default:
       return state;
   }
