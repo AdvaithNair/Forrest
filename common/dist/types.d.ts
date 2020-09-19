@@ -7,6 +7,7 @@ export interface User {
 export interface GlobalState {
     authenticated: boolean;
     loading: boolean;
+    homePage: boolean;
     isSignup: boolean;
     darkMode: boolean;
     currentPage: string;
@@ -24,16 +25,3 @@ export interface UserCredentials {
     lastName: string;
     imageURL: string;
 }
-export interface AxiosResponse {
-    data: any;
-}
-export interface AxiosError {
-    response: AxiosErrorData;
-}
-interface AxiosErrorData {
-    data: AxiosErrorMessage;
-}
-interface AxiosErrorMessage {
-    error: string;
-}
-export {};

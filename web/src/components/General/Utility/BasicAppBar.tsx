@@ -45,8 +45,8 @@ const BasicAppBar: React.FC<Props> = ({ title, buttonText, route }) => {
   return (
     <div>
       <BasicDrawer open={open} onClick={openDrawer}/>
-      <AppBar position='static'>
-        <Toolbar>
+      <AppBar style={{'backgroundColor':'black'}} position='static'>
+        <Toolbar style={{'backgroundColor':'black'}}>
           <Grid
               alignItems='center'
               justify='space-between' container>

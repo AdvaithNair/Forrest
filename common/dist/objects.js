@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CAR_TYPES = exports.USER_DRIVE_DEFAULTS = exports.FILE_UPLOADS = exports.LOCALSTORAGE = exports.COLORS = exports.ERRORS = exports.TOKEN_DURATIONS = exports.COOKIE_NAMES = exports.USER_ROLES = void 0;
 exports.USER_ROLES = {
     USER: 'USER',
     ADMIN: 'ADMIN',
@@ -53,7 +52,7 @@ exports.ERRORS = {
     }
 };
 exports.COLORS = {
-    PRIMARY: '#5E3900',
+    PRIMARY: '#7E8D2B',
     SECONDARY: '#005B13',
     BUBBLY_START: '#7E8D2B',
     BUBBLY_STOP: '#005B13'

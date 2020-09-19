@@ -28,6 +28,7 @@ interface RouteData {
   efficiency: number;
 }
 
+//Computes number of gallons used over a set distance and time from mph and mpg
 const computeGallonsUsed = (
   miles: number,
   speedTravelled: number,
@@ -35,9 +36,13 @@ const computeGallonsUsed = (
   avgHighwayOver: number,
   avgCityOver: number
 ): number => {
+  //Calculate if a user is in the city or on the highway
+  //This allows for us to adjust their speed based on their personal modifiers
   if (speedTravelled > CITY_SPEEDS) speedTravelled += avgHighwayOver;
   else speedTravelled += avgCityOver;
 
+  //This data comes from the resources provided and a Taylor polynomial computed
+  //to fit the curve of the MPG reduction at higher speeds
   const adjustedMilesPerGallon =
     speedTravelled > 50
       ? milesPerGallon *
@@ -46,9 +51,12 @@ const computeGallonsUsed = (
           2.19519)
       : milesPerGallon;
 
+  //Return gallons used
   return miles / adjustedMilesPerGallon;
 };
 
+//This just takes into stoppage time by coming up with the average
+//ratio of stop signs and stop lights
 const calculateIdleGallonsUsed = (): number => {
   const gasUsed =
     (STOP.LIGHT_RATE * secondsToHours(STOP.LIGHT_TIME) +
@@ -58,6 +66,8 @@ const calculateIdleGallonsUsed = (): number => {
   return gasUsed;
 };
 
+//This function processes all possible combinations of inputs of traffic
+//and combines their results
 const getRouteOptions = async (
   origin: string,
   destination: string,
@@ -65,10 +75,14 @@ const getRouteOptions = async (
   avgHighwayOver: number,
   avgCityOver: number
 ) => {
+
   const routes: { [k: string]: any } = {};
 
-  for (const trafficType in TRAFFIC_TYPES) {
-    for (const avoidType in AVOID_TYPES) {
+  //Iterate through all combinations of traffic patterns and avoidances
+  for (const trafficType of TRAFFIC_TYPES) {
+    for (const avoidType of AVOID_TYPES) {
+
+      //Make a request to the map with the current traffic type and avoidance
       const response = await mapsRequest(
         origin,
         destination,
@@ -77,21 +91,27 @@ const getRouteOptions = async (
       );
       const requestRoutes = response.routes;
       let route: any;
-      for (route in requestRoutes) {
-        const routeName: string = route.summary;
 
+      //Iterate through all three routes provided in the map response
+      for (route of requestRoutes) {
+        //Get the name of the route
+        const routeName: string = route.summary;
+        //If the route has not already been processed once before, we're going to
+        //add all of the baseline materials
         if (!routes.hasOwnProperty(routeName)) {
+          //This is a try statement because longer routes may not have a
+          //'duration_in_traffic'
           try {
             routes[routeName] = {
-              count: 1,
+              count: 1, //number of times we've seen this result
               estimatedTimeWithTraffic: secondsToMinutes(
                 route['legs'][0]['duration_in_traffic']['value']
-              ),
+              ), //Convert the seconds of the whole route with traffic into a minute double
               estimatedTime: secondsToMinutes(
                 route['legs'][0]['duration']['value']
-              ),
+              ), //Convert the seconds of the whole route without traffic into a minute double
               distance: metersToMiles(route['legs'][0]['distance']['value']),
-              fuelConsumption: 0
+              fuelConsumption: 0 //Start assuming 0 fuel use
             };
           } catch (error) {
             //console.log(error);
@@ -107,14 +127,13 @@ const getRouteOptions = async (
               fuelConsumption: 0
             };
           }
-        } else {
+        } else { //This code runs if the route has already been established in the dict in another loop
           routes[routeName]['count'] += 1;
           try {
             routes[routeName]['estimatedTimeWithTraffic'] += secondsToMinutes(
               route['legs'][0]['duration_in_traffic']['value']
             );
           } catch (error) {
-            //console.log(error);
             routes[routeName]['estimatedTimeWithTraffic'] += secondsToMinutes(
               route['legs'][0]['duration']['value']
             );
@@ -122,7 +141,10 @@ const getRouteOptions = async (
         }
 
         let step: any;
-        for (step in route['legs'][0]['steps']) {
+        //For each segment of the route, iterate through
+        //1 segment is one straightaway without any turns/merges/etc
+        for (step of route['legs'][0]['steps']) {
+          //Compute the amount of gas used on this segment based on distance and time
           routes[routeName]['fuelConsumption'] += computeGallonsUsed(
             metersToMiles(step['distance']['value']),
             secondsToHours(step['duration']['value']),
@@ -131,7 +153,8 @@ const getRouteOptions = async (
             avgCityOver
           );
           try {
-            if (step['maneuver'] in INTERSECTION_TYPES) {
+            //If the end intersection is a stop of some form, add a gas use penalty
+            if (INTERSECTION_TYPES.includes(step['maneuver'])) {
               routes[routeName][
                 'fuelConsumption'
               ] += calculateIdleGallonsUsed();
@@ -144,10 +167,14 @@ const getRouteOptions = async (
       }
     }
   }
+  //Go through each route that has been processed
   for (let item in routes) {
+    //Take the average of the time in traffic and the fuel consumption
     routes[item]['estimatedTimeWithTraffic'] /= routes[item]['count'];
     routes[item]['fuelConsumption'] /= routes[item]['count'];
 
+    //Create an average of fuel consumed in segments and the fuel consumed as an
+    //estimation based on overall time and mileage (to ensure traffic is accounted for)
     routes[item]['fuelConsumption'] =
       (routes[item]['fuelConsumption'] +
         computeGallonsUsed(
@@ -159,25 +186,33 @@ const getRouteOptions = async (
         )) /
       2;
   }
+  //console.log(routes)
   return routes;
 };
 
+//This function processes the routes
 export const getBestRoutes = async (_req: Request, res: Response) => {
   try {
-    const routes = getRouteOptions(
-      TEST_INFO.origin,
-      TEST_INFO.destination,
-      TEST_INFO.carType,
-      TEST_INFO.avgHighwayOver,
-      TEST_INFO.avgCityOver
+    //Get the routes
+    const routes = await getRouteOptions(
+        TEST_INFO.origin,
+        TEST_INFO.destination,
+        TEST_INFO.carType,
+        TEST_INFO.avgHighwayOver,
+        TEST_INFO.avgCityOver
     );
-    let slowestRoute: RouteData = { route: '', efficiency: 0 };
-    let fastestRoute: RouteData = { route: '', efficiency: 0 };
-    let worstEfficiency: RouteData = { route: '', efficiency: 0 };
-    let bestEfficiency: RouteData = { route: '', efficiency: 0 };
 
+    //Establish variables
+    let slowestRoute: RouteData = { route: '', efficiency: 0 };
+    let fastestRoute: RouteData = { route: '', efficiency: 10000 };
+    let worstEfficiency: RouteData = { route: '', efficiency: 0 };
+    let bestEfficiency: RouteData = { route: '', efficiency: 10000 };
+    //console.log(routes);
     let route: any;
+    //console.log(Object.keys(routes));
     for (route in routes) {
+      //Check to see if the current route is better/worse than the ones
+      //established in the variables above
       if (
         (routes as any)[route]['estimatedTimeWithTraffic'] >
         slowestRoute.efficiency
@@ -185,8 +220,7 @@ export const getBestRoutes = async (_req: Request, res: Response) => {
         slowestRoute = {
           route,
           efficiency:
-            (Math.round((routes as any)[route]['estimatedTimeWithTraffic']) *
-              100) /
+            (Math.round((routes as any)[route]['estimatedTimeWithTraffic']*100)) /
             100
         };
       if (
@@ -196,8 +230,8 @@ export const getBestRoutes = async (_req: Request, res: Response) => {
         fastestRoute = {
           route,
           efficiency:
-            (Math.round((routes as any)[route]['estimatedTimeWithTraffic']) *
-              100) /
+            (Math.round((routes as any)[route]['estimatedTimeWithTraffic'] * 100)
+              ) /
             100
         };
       if (
@@ -206,16 +240,14 @@ export const getBestRoutes = async (_req: Request, res: Response) => {
         worstEfficiency = {
           route,
           efficiency:
-            (Math.round((routes as any)[route]['estimatedTimeWithTraffic']) *
-              100) /
+            (Math.round((routes as any)[route]['fuelConsumption'] *100 )) /
             100
         };
       if ((routes as any)[route]['fuelConsumption'] < bestEfficiency.efficiency)
         bestEfficiency = {
           route,
           efficiency:
-            (Math.round((routes as any)[route]['estimatedTimeWithTraffic']) *
-              100) /
+            (Math.round((routes as any)[route]['fuelConsumption']*100)) /
             100
         };
     }
@@ -229,7 +261,7 @@ export const getBestRoutes = async (_req: Request, res: Response) => {
 
     res.json(efficiency);
   } catch {
-    res.status(400).json({ error: 'somethign went worong' });
+    res.status(400).json({ error: 'Something went wrong' });
   }
 };
 
