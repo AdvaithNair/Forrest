@@ -47,7 +47,7 @@ const BasicDrawer: React.FC<Props> = ({ open, onClick }) => {
           </IconButton>
         </div>
         <List>
-          <ListItem button onClick={() => toPage('/dashboard')}>
+          <ListItem button onClick={() => toPage('/')}>
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>

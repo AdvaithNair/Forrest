@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import BasicAppBar from '../General/Utility/BasicAppBar';
 import { COLORS } from '@app/common';
-import { Redirect } from 'react-router-dom';
+import DashboardBox from '../Dashboard/DashboardBox';
 
 const MainPage = () => {
   useEffect(() => {
@@ -14,7 +14,7 @@ const MainPage = () => {
   return (
     <div>
       <BasicAppBar />
-      <Redirect to={"/dashboard"} />
+      <DashboardBox />
     </div>
   );
 };

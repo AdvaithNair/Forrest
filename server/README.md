@@ -57,6 +57,31 @@ GET: Returns User's Own User Info.
   - User
 
 ```
+/get/:username
+```
+
+GET: Returns Other User Info, Provided Username in URL Parameters.
+
+- URL Parameters
+  - username
+- Returns
+  - User
+
+```
+/search?username={params.username}
+```
+
+GET: Returns User Info, Provided Username in Query Parameters.
+
+- Query Parameters
+  - username
+- Returns
+  - Array<User>
+    - username
+    - imageURL
+    - carbonSaved
+
+```
 /signup
 ```
 
@@ -92,7 +117,7 @@ POST: Signs Out User. Returns Success Message.
 - Parameters
   - None
 - Returns
-  - message
+  - { "message": "Successfully Signed Out" }
 
 ```
 /update
@@ -130,6 +155,18 @@ PUT: Updates User Social Media. Returns User.
   - username (Username for designated Social Media)
 - Returns
   - User
+
+```
+/update/password
+```
+
+PUT: Updates User Password. Returns Success Message.
+
+- Parameters
+  - provider (Social Media Type: Facebook, Instagram, Twitter, Snapchat)
+  - username (Username for designated Social Media)
+- Returns
+  - { "message": "Successfully Updated Password" }
 
 ```
 /update/drive

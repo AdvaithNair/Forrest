@@ -10,6 +10,7 @@ import CustomLink from '../General/Utility/CustomLink';
 import axios from '../../utils/axios';
 import CustomSnackbar from '../General/Utility/Snackbar';
 import { clearLoading, setLoading } from '../../context/loading';
+import { useHistory } from 'react-router-dom';
 
 interface SignUp {
   email: string;
@@ -41,6 +42,7 @@ const SignUpForm = () => {
   const [open, setOpen] = useState<string>('');
   const [errors, setErrors] = useState<SignUp>(blankErrors);
   const { dispatch } = useContext<ReducerContext>(UserContext);
+  const history = useHistory();
 
   const filterInput = () => {
     const { email, password, firstName, lastName, username } = input;
@@ -97,6 +99,8 @@ const SignUpForm = () => {
             payload: res.data
           });
           clearLoading(dispatch);
+
+          history.push('/');
         })
         .catch((error: any) => {
           console.log(error);

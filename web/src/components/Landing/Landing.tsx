@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 import SignInBox from '../SignIn/SignInBox';
 import SignUpBox from '../SignUp/SignUpBox';
 import { UserContext } from '../../context/context';
-import HomePage from '../WebsiteHomePage/HomePage';
 
 const Landing: React.FC = () => {
   const { state } = useContext<ReducerContext>(UserContext);
@@ -32,7 +31,7 @@ const Landing: React.FC = () => {
       alignItems='center'
       style={{ minHeight: '100vh' }}
     >
-      {state.homePage ? <HomePage /> : ( state.isSignup ? <SignUpBox /> : <SignInBox />)}
+      { state.isSignup ? <SignUpBox /> : <SignInBox />}
     </Grid>
   );
 };

@@ -1,108 +1,147 @@
-import { ReducerContext } from '@app/common';
-import {Grid, Button, Toolbar, Hidden} from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import React, { useContext } from 'react';
-import { UserContext } from '../../context/context';
-import { clearLoading, setLoading } from '../../context/loading';
-import STATE from '../../context/state';
-import AppBar from '@material-ui/core/AppBar';
-import HeaderLogo from '../../images/Branding/HeaderLogo.png';
-import trafficSplash from '../../images/Display/trafficSplash.jpg';
-import treeSplash from '../../images/Display/treeSplash.jpg';
-import aboutSplash from '../../images/Display/aboutSplash.jpg';
-import BasicHomepageCard from './BasicHomepageCard';
+import React, { useRef } from 'react';
+import Logo from '../../images/Branding/Logo.png';
+import {
+  Button,
+  IconButton,
+  Grid,
+  Card,
+  Box,
+  CardContent,
+  Typography
+} from '@material-ui/core';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import DirectionsIcon from '@material-ui/icons/Directions';
+import InfoIcon from '@material-ui/icons/Info';
+import { useHistory } from 'react-router-dom';
 
-const HomePage = () => {
-  const { dispatch } = useContext<ReducerContext>(UserContext);
-  // const [open, setOpen] = React.useState(false);
+const iconStyle = {
+  fontSize: 50,
+  color: 'green'
+};
 
-  const doNothing = () => {
-    //Do nothing
-  };
+interface Props {
+  title: string;
+  body: string;
+}
+const CardComponent: React.FC<Props> = ({ title, body, children }) => {
+  return (
+    <Box m={2} style={{ position: 'relative', minWidth: '290px' }}>
+      <Card style={{ height: 300, background: '#DDDDDD', padding: 20 }}>
+        {children}
+        <CardContent>
+          <Typography color='textPrimary' gutterBottom style={{ fontSize: 25 }}>
+            {title.toUpperCase()}
+          </Typography>
+          <Typography color='textSecondary' gutterBottom>
+            {body}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Box>
+  );
+};
 
-  const startApp = () => {
-    setLoading(dispatch);
-    dispatch({
-      type: STATE.VIEW_WEB_APP
-    });
-    clearLoading(dispatch);
+const HomePage: React.FC = () => {
+  const cards = useRef(null);
+  const history = useHistory();
+
+  const toAuth = () => {
+    //dispatch({ type: STATE.VIEW_WEB_APP });
+    history.push('/enter');
   };
 
   return (
-    <Box style={{ display: "block",height: "100vh", width: '100vw', overflowY: 'auto' }}>
-      <AppBar position='static' style={{ backgroundColor: 'black' }}>
-        <Toolbar style={{ backgroundColor: 'black' }}>
-          <Grid alignItems='center' justify='space-between' container>
-            <Grid item>
-              <Box marginTop={0.5}>
-                <Grid alignItems='center' justify='space-between' container>
-                  <img src={HeaderLogo} height={55} />
-                </Grid>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Button onClick={startApp} color='inherit'>
-                Enter App
-              </Button>
-            </Grid>
+    <div className='landing-main'>
+      <div className='landing-background' style={{ position: 'relative' }}>
+        <div style={{ zIndex: 3, display: 'block' }}>
+          <img className='landing-logo' src={Logo} alt={'Forrest'} />
+          <div style={{ margin: '0 auto' }}>
+            <Button
+              style={{
+                zIndex: 30,
+                color: 'white',
+                backgroundColor: '#005B13',
+                margin: '0 auto',
+                padding: '5px 30px',
+                fontSize: 30
+              }}
+              onClick={toAuth}
+            >
+              Save The World
+            </Button>
+          </div>
+          <div className='down-button'>
+            <IconButton
+              onClick={() =>
+                window.scrollTo(0, (cards as any).current.offsetTop)
+              }
+            >
+              <KeyboardArrowDownIcon style={{ fontSize: 40, color: 'white' }} />
+            </IconButton>
+          </div>
+        </div>
+      </div>
+      <div className='card-section'>
+        <Typography
+          color='textPrimary'
+          ref={cards}
+          style={{ paddingTop: 80, fontSize: 50, fontWeight: 600 }}
+        >
+          DO YOUR PART
+        </Typography>
+        <Grid
+          container
+          direction='row'
+          justify='space-around'
+          alignItems='center'
+        >
+          <Grid item sm>
+            <CardComponent
+              title={'Problem'}
+              body={
+                "The world is dying. We see this all around us today, from the rising global temperatures to the raging forest fires in the West Coast. Climate Change, caused by our pollutions are slowly killing the Earth. If we don't stop soon, the world will be beyond saving. We need a solution. Now."
+              }
+            >
+              <DriveEtaIcon style={iconStyle} />
+            </CardComponent>
           </Grid>
-        </Toolbar>
-      </AppBar>
-      <Box
-        boxShadow={4}
-        height={'100%'}
-        bgcolor='background.paper'
-        m={0}
-        p={1}
-        borderRadius={0}
-      >
-        <BasicHomepageCard
-          desc1={
-            'An innovative routing application that rewards both the user and the planet if the most efficent route is taken'
-          }
-          desc2={
-            'Using the Google Maps API, live traffic data is processed in order to return a variety of route options to balance ' +
-            'both duration and eco-efficiency, measured in lbs of CO2 saved'
-          }
-          title={'Forrest'}
-          buttonText={'Sign up for Forrest'}
-          buttonFunction={startApp}
-          image={trafficSplash}
-        />
-        <Grid container alignItems='center' justify='space-between'>
-          <Grid item md>
-            <BasicHomepageCard
-              desc1={
-                'For every 500 lbs of CO2 prevented from entering the atmosphere...'
+          <Grid item sm>
+            <CardComponent
+              title={'Solution'}
+              body={
+                'Climate Change cannot be solved overnight. But we can do our part in making the environment a safer place. Enter Forrest, the app created to reduce our Carbon Dioxide (CO2) Emissions when driving by calculating energy and environmentally efficient routes. Forrest is the future.'
               }
-              desc2={
-                'Forrest will have one tree planted to help boost the environment and to celebrate your journey towards becoming carbon neutral'
-              }
-              title={'Green Initiative'}
-              buttonText={' '}
-              buttonFunction={doNothing}
-              image={treeSplash}
-            />
+            >
+              <DirectionsIcon style={iconStyle} />
+            </CardComponent>
           </Grid>
-          <Hidden smDown>
-          <Grid item md>
-            <BasicHomepageCard
-              desc1={
-                'This project was created by Advaith Nair & Dominic Hupp for hackMIT 2020'
+          <Grid item sm>
+            <CardComponent
+              title={'About'}
+              body={
+                'Forrest is a environmentally productive concept created by Advaith Nair and Dominic Hupp in response to the ongoing forest fires of the West Coast. We both recognize that Climate Change is a massive issue that must be solved one step at a time. Forrest is our solution.'
               }
-              desc2={
-                'Between them, they have one hackathon worth of experience and are excited to be a part of this competition!'
-              }
-              title={'About Us'}
-              buttonText={' '}
-              buttonFunction={doNothing}
-              image={aboutSplash}
-            />
+            >
+              <InfoIcon style={iconStyle} />
+            </CardComponent>
           </Grid>
-          </Hidden>
         </Grid>
-      </Box>
-    </Box>
+        <Button
+          style={{
+            zIndex: 30,
+            color: 'white',
+            backgroundColor: '#005B13',
+            margin: '40px auto',
+            padding: '5px 30px',
+            fontSize: 20
+          }}
+          onClick={toAuth}
+        >
+          Join Forrest
+        </Button>
+      </div>
+    </div>
   );
 };
 
