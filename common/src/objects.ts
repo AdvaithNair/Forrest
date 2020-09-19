@@ -53,10 +53,10 @@ export const ERRORS = {
 };
 
 export const COLORS = {
-  PRIMARY: '#5A0073',
-  SECONDARY: '#000081',
-  BUBBLY_START: '#5A0073',
-  BUBBLY_STOP: '#000081'
+  PRIMARY: '#7E8D2B',
+  SECONDARY: '#5E3900',
+  BUBBLY_START: '#7E8D2B',
+  BUBBLY_STOP: '#5E3900'
 };
 
 export const LOCALSTORAGE = {

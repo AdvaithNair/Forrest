@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FILE_UPLOADS = exports.LOCALSTORAGE = exports.COLORS = exports.ERRORS = exports.TOKEN_DURATIONS = exports.COOKIE_NAMES = exports.USER_ROLES = void 0;
 exports.USER_ROLES = {
     USER: 'USER',
     ADMIN: 'ADMIN',
@@ -52,10 +51,10 @@ exports.ERRORS = {
     }
 };
 exports.COLORS = {
-    PRIMARY: '#5A0073',
-    SECONDARY: '#000081',
-    BUBBLY_START: '#5A0073',
-    BUBBLY_STOP: '#000081'
+    PRIMARY: '#7E8D2B',
+    SECONDARY: '#5E3900',
+    BUBBLY_START: '#7E8D2B',
+    BUBBLY_STOP: '#5E3900'
 };
 exports.LOCALSTORAGE = {
     USER: 'userData'
