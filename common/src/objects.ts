@@ -56,7 +56,7 @@ export const COLORS = {
   PRIMARY: '#5E3900',
   SECONDARY: '#005B13',
   BUBBLY_START: '#7E8D2B',
-  BUBBLY_STOP: '#5E3900'
+  BUBBLY_STOP: '#005B13'
 };
 
 export const LOCALSTORAGE = {

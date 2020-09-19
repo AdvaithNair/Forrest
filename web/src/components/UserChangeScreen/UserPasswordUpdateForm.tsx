@@ -109,7 +109,7 @@ const UserPasswordUpdateForm = () => {
         />
       </Grid>
       <Button type='submit' fullWidth variant='contained' color='primary'>
-        Change Password
+        Update Password
       </Button>
       <CustomSnackbar openStr={open}> </CustomSnackbar>
     </form>

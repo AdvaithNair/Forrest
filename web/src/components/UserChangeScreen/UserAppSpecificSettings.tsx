@@ -74,6 +74,7 @@ const UserAppSpecificSettings = () => {
                       justify='space-evenly'
                       alignItems='center'>
                     <Grid item md={4}>
+                        <Box p={2}>
                         <Typography id="continuous-slider">
                             Speed Over Limit on Highway
                         </Typography>
@@ -86,8 +87,10 @@ const UserAppSpecificSettings = () => {
                             max={15}
                             valueLabelDisplay="auto"
                         />
+                        </Box>
                     </Grid>
                     <Grid item md={4}>
+                        <Box p={2}>
                         <Typography id="continuous-slider">
                             Speed Over Limit in City
                         </Typography>
@@ -100,11 +103,12 @@ const UserAppSpecificSettings = () => {
                             max={15}
                             valueLabelDisplay="auto"
                         />
+                        </Box>
                 </Grid>
                 </Grid>
             </Grid>
             <Button type='submit' fullWidth variant='contained' color='primary'>
-                Change Driving Information
+                Update Driving Information
             </Button>
             <CustomSnackbar openStr={open}> </CustomSnackbar>
         </form>

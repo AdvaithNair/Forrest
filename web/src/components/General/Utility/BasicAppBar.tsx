@@ -18,6 +18,15 @@ interface Props {
 
 const BasicAppBar: React.FC<Props> = ({ title, buttonText, route }) => {
   const { dispatch } = useContext<ReducerContext>(UserContext);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSubmit = () => {
     axios
