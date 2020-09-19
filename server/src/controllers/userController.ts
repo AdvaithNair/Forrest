@@ -275,3 +275,33 @@ export const linkSocialMedia = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const updateDriveInfo = async (req: Request, res: Response) => {
+  try {
+    const { id } = res.locals.payload;
+    const { parameters } = req.body;
+
+    // Get User
+    const user = await User.findOne(id);
+    if (!user) throw new Error();
+
+    // Parse Parameters and Update
+    if (parameters.carType) user.carType = parameters.carType;
+    if (parameters.avgHighwayOver)
+      user.avgHighwayOver = parameters.avgHighwayOver;
+    if (parameters.avgCityOver) user.avgCityOver = parameters.avgCityOver;
+    user.save();
+
+    // Filter Output
+    delete user.password;
+    delete user.count;
+    delete user.role;
+
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: ERRORS.UPDATE_USER.DRIVE_INFO
+    });
+  }
+};

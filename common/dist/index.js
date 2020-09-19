@@ -16,4 +16,5 @@ __exportStar(require("./constants"), exports);
 __exportStar(require("./types"), exports);
 __exportStar(require("./objects"), exports);
 __exportStar(require("./secrets"), exports);
+__exportStar(require("./stats"), exports);
 //# sourceMappingURL=index.js.map

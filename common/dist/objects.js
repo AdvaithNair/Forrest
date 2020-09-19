@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FILE_UPLOADS = exports.LOCALSTORAGE = exports.COLORS = exports.ERRORS = exports.TOKEN_DURATIONS = exports.COOKIE_NAMES = exports.USER_ROLES = void 0;
+exports.CAR_TYPES = exports.USER_DRIVE_DEFAULTS = exports.FILE_UPLOADS = exports.LOCALSTORAGE = exports.COLORS = exports.ERRORS = exports.TOKEN_DURATIONS = exports.COOKIE_NAMES = exports.USER_ROLES = void 0;
 exports.USER_ROLES = {
     USER: 'USER',
     ADMIN: 'ADMIN',
@@ -44,7 +44,8 @@ exports.ERRORS = {
     },
     UPDATE_USER: {
         UNABLE: 'Unable To Update User',
-        SOCIAL_MEDIA: 'Unable To Update Social Media'
+        SOCIAL_MEDIA: 'Unable To Update Social Media',
+        DRIVE_INFO: 'Unable To Update Drive Info'
     },
     FILE_UPLOAD: {
         NO_FILE: 'Please Upload File',
@@ -62,5 +63,19 @@ exports.LOCALSTORAGE = {
 };
 exports.FILE_UPLOADS = {
     PROFILE_PICTURE: 'profile-picture'
+};
+exports.USER_DRIVE_DEFAULTS = {
+    VEHICLE_TYPE: 'SEDAN',
+    AVERAGE_MPH_OVER_HIGHWAY: 3,
+    AVERAGE_MPH_OVER_CITY: 0
+};
+exports.CAR_TYPES = {
+    SEDAN: 'SEDAN',
+    HYBRID_SEDAN: 'HYBRID_SEDAN',
+    TRUCK: 'TRUCK',
+    VAN: 'VAN',
+    SUV: 'SUV',
+    MOTORCYCLE: 'MOTORCYCLE',
+    ELECTRIC: 'ELECTRIC'
 };
 //# sourceMappingURL=objects.js.map

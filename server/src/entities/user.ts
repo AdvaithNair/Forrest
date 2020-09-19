@@ -1,5 +1,5 @@
 import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
-import { BUCKET_URL, USER_ROLES } from '@app/common';
+import { BUCKET_URL, USER_ROLES, USER_DRIVE_DEFAULTS } from '@app/common';
 
 @Entity()
 export default class User extends BaseEntity {
@@ -43,4 +43,16 @@ export default class User extends BaseEntity {
 
   @Column('int', { default: 0 })
   count: number;
+
+  @Column('text', { default: USER_DRIVE_DEFAULTS.VEHICLE_TYPE })
+  carType: string;
+
+  @Column({ default: USER_DRIVE_DEFAULTS.AVERAGE_MPH_OVER_HIGHWAY })
+  avgHighwayOver: number;
+
+  @Column({ default: USER_DRIVE_DEFAULTS.AVERAGE_MPH_OVER_CITY })
+  avgCityOver: number;
+
+  @Column({ default: 0 })
+  carbonSaved: number;
 }

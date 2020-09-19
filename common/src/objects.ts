@@ -44,7 +44,8 @@ export const ERRORS = {
   },
   UPDATE_USER: {
     UNABLE: 'Unable To Update User',
-    SOCIAL_MEDIA: 'Unable To Update Social Media'
+    SOCIAL_MEDIA: 'Unable To Update Social Media',
+    DRIVE_INFO: 'Unable To Update Drive Info'
   },
   FILE_UPLOAD: {
     NO_FILE: 'Please Upload File',
@@ -65,4 +66,22 @@ export const LOCALSTORAGE = {
 
 export const FILE_UPLOADS = {
   PROFILE_PICTURE: 'profile-picture'
+};
+
+// User Defaults for Drive Settings
+export const USER_DRIVE_DEFAULTS = {
+  VEHICLE_TYPE: 'SEDAN',
+  AVERAGE_MPH_OVER_HIGHWAY: 3,
+  AVERAGE_MPH_OVER_CITY: 0
+};
+
+// Car Types for Forrest
+export const CAR_TYPES = {
+  SEDAN: 'SEDAN',
+  HYBRID_SEDAN: 'HYBRID_SEDAN',
+  TRUCK: 'TRUCK',
+  VAN: 'VAN',
+  SUV: 'SUV',
+  MOTORCYCLE: 'MOTORCYCLE',
+  ELECTRIC: 'ELECTRIC'
 };
