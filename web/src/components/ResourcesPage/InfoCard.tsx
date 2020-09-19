@@ -29,7 +29,7 @@ const InfoCard: React.FC<Props> = ({title, description, link, type}) => {
     return (
         <div>
             <Hidden smDown>
-                <Box width={360} m={1}>
+                <Box width={420} m={1}>
                     <Card variant="outlined">
                         <CardContent>
                             <Grid container

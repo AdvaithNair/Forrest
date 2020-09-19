@@ -17,7 +17,7 @@ const ResourcesBox = () => {
         justify='space-evenly'
         alignItems='flex-start'
       >
-        <Grid item sm>
+        <Grid item>
           <InfoCard
             type={'article'}
             title={'EcoDrivers Manual'}
@@ -30,7 +30,7 @@ const ResourcesBox = () => {
             }
           />
         </Grid>
-        <Grid item sm>
+        <Grid item>
           <InfoCard
             type={''}
             title={'Techniques for Drivers to Conserve Fuel'}
@@ -41,7 +41,7 @@ const ResourcesBox = () => {
             link={'https://afdc.energy.gov/conserve/behavior_techniques.html'}
           />
         </Grid>
-        <Grid item sm>
+        <Grid item>
           <InfoCard
             type={'graph'}
             title={'Average Fuel Economy by Major Vehicle Category'}
@@ -52,7 +52,7 @@ const ResourcesBox = () => {
             link={'https://afdc.energy.gov/data/10310'}
           />
         </Grid>
-        <Grid item sm>
+        <Grid item>
           <InfoCard
             type={''}
             title={'Gasoline to CO2'}
@@ -63,7 +63,7 @@ const ResourcesBox = () => {
             link={'https://climatekids.nasa.gov/review/carbon/gasoline.html'}
           />
         </Grid>
-        <Grid item sm>
+        <Grid item>
           <InfoCard
             type={'article'}
             title={'Signal Cycle Lengths'}
@@ -76,7 +76,7 @@ const ResourcesBox = () => {
             }
           />
         </Grid>
-        <Grid item sm>
+        <Grid item>
           <InfoCard
             type={''}
             title={'Turn Off Your Idling Engines'}

@@ -234,13 +234,13 @@ export const linkSocialMedia = async (req: Request, res: Response) => {
 
     // Set URL
     if (provider == 'Facebook')
-      user.facebook = `https://facebook.com/${username}`;
+      user.facebook = !username ? '' : `https://facebook.com/${username}`;
     else if (provider == 'Instagram')
-      user.instagram = `https://instagram.com/${username}`;
+      user.instagram = !username ? '' : `https://instagram.com/${username}`;
     else if (provider == 'Twitter')
-      user.twitter = `https://twitter.com/${username}`;
+      user.twitter = !username ? '' : `https://twitter.com/${username}`;
     else if (provider == 'Snapchat')
-      user.snapchat = `https://snapchat.com/add/${username}`;
+      user.snapchat = !username ? '' : `https://snapchat.com/add/${username}`;
     user.save();
 
     // Filter Output

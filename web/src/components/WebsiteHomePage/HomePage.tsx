@@ -29,7 +29,7 @@ const HomePage = () => {
   };
 
   return (
-    <div style={{ height: '100vh', overflowY: 'auto' }}>
+    <div style={{ display: "block",height: "auto", width: '100vw', overflowY: 'auto' }}>
       <AppBar position='static' style={{ backgroundColor: 'black' }}>
         <Toolbar style={{ backgroundColor: 'black' }}>
           <Grid alignItems='center' justify='space-between' container>
