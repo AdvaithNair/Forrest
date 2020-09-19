@@ -10,6 +10,7 @@ import UploadPhoto from './UploadPhoto';
 import SocialMediaGrid from './SocialMediaGrid';
 import UserAppSpecificSettings from "./UserAppSpecificSettings";
 
+
 const UserSettingsBox = () => {
   const { state, dispatch } = useContext<ReducerContext>(UserContext);
   const [open, setOpen] = React.useState(false);

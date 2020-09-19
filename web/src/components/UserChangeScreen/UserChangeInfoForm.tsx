@@ -165,7 +165,7 @@ const UserChangeInfoForm = () => {
         name={'email'}
       />
       <Button type='submit' fullWidth variant='contained' color='primary'>
-        Submit Changes
+        Update User Information
       </Button>
       <CustomSnackbar openStr={open}> </CustomSnackbar>
     </form>

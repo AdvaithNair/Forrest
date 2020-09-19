@@ -53,10 +53,10 @@ exports.ERRORS = {
     }
 };
 exports.COLORS = {
-    PRIMARY: '#7E8D2B',
-    SECONDARY: '#5E3900',
+    PRIMARY: '#5E3900',
+    SECONDARY: '#005B13',
     BUBBLY_START: '#7E8D2B',
-    BUBBLY_STOP: '#5E3900'
+    BUBBLY_STOP: '#005B13'
 };
 exports.LOCALSTORAGE = {
     USER: 'userData'

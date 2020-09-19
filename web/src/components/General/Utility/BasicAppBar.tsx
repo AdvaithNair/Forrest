@@ -1,5 +1,5 @@
 import { LOCALSTORAGE, ReducerContext } from '@app/common';
-import { Button, Grid, Typography } from '@material-ui/core';
+import {Box, Button, Grid, Typography} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { AxiosError } from 'axios';
@@ -8,6 +8,9 @@ import { UserContext } from '../../../context/context';
 import { clearLoading, setLoading } from '../../../context/loading';
 import STATE from '../../../context/state';
 import axios from '../../../utils/axios';
+import HeaderLogo from '../../../images/Branding/HeaderLogo.png'
+import MenuIcon from '@material-ui/icons/Menu';
+import BasicDrawer from "./BasicDrawer";
 
 interface Props {
   buttonText: string;
@@ -17,6 +20,12 @@ interface Props {
 
 const BasicAppBar: React.FC<Props> = ({ title, buttonText, route }) => {
   const { dispatch } = useContext<ReducerContext>(UserContext);
+  const [open, setOpen] = React.useState(false);
+
+  const openDrawer = () => {
+    setOpen(!open);
+  };
+
 
   const handleSubmit = () => {
     axios
@@ -35,11 +44,21 @@ const BasicAppBar: React.FC<Props> = ({ title, buttonText, route }) => {
 
   return (
     <div>
+      <BasicDrawer open={open} onClick={openDrawer}/>
       <AppBar position='static'>
         <Toolbar>
-          <Grid justify='space-between' container>
+          <Grid
+              alignItems='center'
+              justify='space-between' container>
             <Grid item>
-              <Typography variant='h6'>{title}</Typography>
+              <Box marginTop={.5}>
+                <Grid
+                    alignItems='center'
+                    justify='space-between' container>
+                <MenuIcon fontSize={'large'} onClick={openDrawer} />
+                <img src={HeaderLogo}  height={55}/>
+                </Grid>
+              </Box>
             </Grid>
             <Grid item>
               <Button href={route} color='inherit'>

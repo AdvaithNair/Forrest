@@ -57,6 +57,11 @@ export const reducer = (state: any, action: any) => {
         ...state,
         darkMode: !state.darkMode
       };
+    case STATE.SET_VIEW_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload
+      };
     default:
       return state;
   }

@@ -8,6 +8,7 @@ export const initialState: GlobalState = {
   loading: false,
   isSignup: false,
   darkMode: true,
+  currentPage: 'dashboard',
   user: {
     id: -1,
     email: '',
