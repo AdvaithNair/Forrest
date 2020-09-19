@@ -5,12 +5,13 @@ import './App.css';
 import theme from './utils/theme';
 import { UserContext } from './context/context';
 import Index from './pages/Index';
-import { LOCALSTORAGE, ReducerContext } from '@app/common';
+import { ReducerContext } from '@app/common';
 import axios from './utils/axios';
 import { AxiosResponse } from 'axios';
 import STATE from './context/state';
 import Animation from './components/General/Utility/Animation';
 import Loading from './components/Loading/Loading';
+import 'react-dropzone-uploader/dist/styles.css';
 
 const App: React.FC = () => {
   // const [animation, setAnimation] = useState<boolean>(true);
