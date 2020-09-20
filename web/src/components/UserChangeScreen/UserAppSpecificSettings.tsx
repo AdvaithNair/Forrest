@@ -24,12 +24,9 @@ const UserAppSpecificSettings = () => {
         avgCityOver: state.user.avgCityOver
     });
 
-    console.log(input);
-
     const [open, setOpen] = useState<string>('');
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        console.log(input)
         event.preventDefault();
         axios
             .put('/api/user/update/drive', {'parameters': input})
