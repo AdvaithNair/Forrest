@@ -1,16 +1,12 @@
 import Box from '@material-ui/core/Box';
-import React, { useContext } from 'react';
+import React from 'react';
 import SignInForm from './SignInForm';
 import { Grid, Button } from '@material-ui/core';
 import Blurb from '../General/Misc/Blurb';
 import Logo from '../../images/Branding/Logo.png';
-import STATE from '../../context/state';
-import { ReducerContext } from '@app/common';
-import { UserContext } from '../../context/context';
 import { useHistory } from 'react-router';
 
 const SignInBox = () => {
-  const { dispatch } = useContext<ReducerContext>(UserContext);
   const history = useHistory();
 
   return (

@@ -16,7 +16,7 @@ export const AuthRoute: React.FC<Props> = ({ exact, path, component }) => {
   return (
     <div>
       {state.authenticated === false ? (
-        <Redirect to='/' />
+        setTimeout(() => <Redirect to='/' />, 1500)
       ) : (
         <Route {...exact} path={path} component={component} />
       )}

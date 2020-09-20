@@ -53,8 +53,8 @@ const HomePage: React.FC = () => {
 
   return (
     <div className='landing-main'>
-      <div className='landing-background' style={{ position: 'relative' }}>
-        <div style={{ zIndex: 3, display: 'block' }}>
+      <div className='landing-background' style={{ zIndex: 0, position: 'relative' }}>
+        <div style={{ display: 'block' }}>
           <img className='landing-logo' src={Logo} alt={'Forrest'} />
           <div style={{ margin: '0 auto' }}>
             <Button
