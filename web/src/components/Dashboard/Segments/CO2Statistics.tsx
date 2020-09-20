@@ -1,20 +1,20 @@
-import React, { useContext } from 'react';
-import { CARBON_SAVINGS, COLORS, ReducerContext } from '@app/common';
-import { UserContext } from '../../../context/context';
+import React from 'react';
+import { CARBON_SAVINGS, COLORS, UserCredentials } from '@app/common';
 import { Grid } from '@material-ui/core';
 import SmallDataCard from '../SmallDataCard';
-import SmallTextCard from '../SmallTextCard';
 
-const CO2Statistics = () => {
-  const { state, dispatch } = useContext<ReducerContext>(UserContext);
+interface Props {
+  user: UserCredentials;
+}
 
+const CO2Statistics: React.FC<Props> = ({ user }) => {
   return (
     <Grid container direction='row' justify='space-evenly' alignItems='center'>
       <Grid item sm>
         <SmallDataCard
           data={
-            (state.user.carbonSaved -
-              (state.user.carbonSaved % CARBON_SAVINGS.CARBON_PER_TREE)) /
+            (user.carbonSaved -
+              (user.carbonSaved % CARBON_SAVINGS.CARBON_PER_TREE)) /
             CARBON_SAVINGS.CARBON_PER_TREE
           }
           max={100}
@@ -27,7 +27,7 @@ const CO2Statistics = () => {
       </Grid>
       <Grid item sm>
         <SmallDataCard
-          data={state.user.carbonSaved}
+          data={user.carbonSaved}
           max={CARBON_SAVINGS.CARBON_PER_TREE}
           title={'C02 Saved Until Next Tree'}
           icon={'cloud'}

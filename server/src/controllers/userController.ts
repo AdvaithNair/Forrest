@@ -179,7 +179,16 @@ export const updateUser = async (req: Request, res: Response) => {
 export const getOwnInfo = async (_req: Request, res: Response) => {
   try {
     // Gets User
-    const user = await parseUser(res.locals.payload.id, ['routeLogs']);
+    const user = await getRepository(User)
+      .createQueryBuilder('user')
+      .innerJoinAndSelect('user.routeLogs', 'routeLogs')
+      .orderBy('routeLogs.date', 'DESC')
+      .getOne();
+
+    if (!user) throw new Error();
+    delete user.password;
+    delete user.count;
+    delete user.role;
 
     res.json(user);
   } catch (error) {
@@ -315,7 +324,7 @@ export const updateDriveInfo = async (req: Request, res: Response) => {
 export const addRoute = async (req: Request, res: Response) => {
   try {
     const { id } = res.locals.payload;
-    const { route, carbonSaved } = req.body;
+    const { route, carbonSaved, estimatedDuration } = req.body;
 
     // Get User
     const userData = await parseUser(id);
@@ -326,6 +335,7 @@ export const addRoute = async (req: Request, res: Response) => {
     logEntry.route = route;
     logEntry.userID = id;
     logEntry.carbonSaved = carbonSaved;
+    logEntry.estimatedDuration = estimatedDuration;
     logEntry.carType = userData.carType;
     logEntry.avgHighwayOver = userData.avgHighwayOver;
     logEntry.avgCityOver = userData.avgCityOver;
@@ -410,8 +420,8 @@ export const searchUser = async (req: Request, res: Response) => {
 
     // Gets Users
     const users = await getRepository(User)
-      .createQueryBuilder("user")
-      .orderBy("user.username")
+      .createQueryBuilder('user')
+      .orderBy('user.username')
       .select(['user.username', 'user.imageURL', 'user.carbonSaved'])
       .where('user.username like :name', { name: `%${username}%` })
       .limit(queryLimit)

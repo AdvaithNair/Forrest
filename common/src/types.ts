@@ -50,5 +50,6 @@ export interface RouteLog {
   avgHighwayOver: number;
   avgCityOver: number;
   carbonSaved: number;
+  estimatedDuration: number;
   verified: boolean;
 }

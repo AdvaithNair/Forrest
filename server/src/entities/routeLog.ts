@@ -30,6 +30,9 @@ export default class RouteLog extends BaseEntity {
   @Column()
   carbonSaved: number;
 
+  @Column()
+  estimatedDuration: number; // Minutes
+
   @Column('text')
   date: string;
 
