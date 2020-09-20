@@ -16,19 +16,6 @@ function getSteps() {
     return ['Select Start and End Locations', 'Choose Route', 'Confirm Arrival'];
 }
 
-function getStepContent(stepIndex: number) {
-    switch (stepIndex) {
-        case 0:
-            return
-        case 1:
-            return 'C';
-        case 2:
-            return <LanguageIcon/>;
-        default:
-
-    }
-}
-
 const UserRoutesBox = () => {
     const {state, dispatch} = useContext<ReducerContext>(UserContext);
 
@@ -36,6 +23,9 @@ const UserRoutesBox = () => {
         start: "",
         end: ""
     });
+
+    const [readyToStart, setReadyToStart] = React.useState<boolean>(false);
+
 
     const [activeStep, setActiveStep] = React.useState<number>(0);
     const steps = getSteps();
@@ -72,8 +62,13 @@ const UserRoutesBox = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
+    const startRoute = () => {
+        setReadyToStart(true)
+    }
+
     const handleReset = () => {
         setActiveStep(0);
+        setReadyToStart(false);
     };
 
     return (
