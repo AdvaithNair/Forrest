@@ -17,6 +17,7 @@ import RoutesPage from './pages/RoutesPage';
 import Landing from './components/Landing/Landing';
 import AuthRoute from './components/General/Utility/AuthRoute';
 import NotFound from './components/General/Utility/NotFound';
+import UserPage from './pages/UserPage';
 
 const App: React.FC = () => {
   const [animation, setAnimation] = useState<boolean>(true);
@@ -29,7 +30,6 @@ const App: React.FC = () => {
     axios
       .get('/api/user/')
       .then((res: AxiosResponse) => {
-        console.log('hit2');
         // Sets State
         dispatch({ type: STATE.SET_USER, payload: res.data });
         history.push('/');
@@ -42,11 +42,13 @@ const App: React.FC = () => {
 
   // Persists User
   useEffect(() => {
+    // Scroll to Top
+    window.scrollTo(0, 0);
+
     // Sends API Request to Verify User
     axios
       .get('/api/user/')
       .then((res: AxiosResponse) => {
-        console.log('hit2');
         // Sets State
         dispatch({ type: STATE.SET_USER, payload: res.data });
         // history.push('/');
@@ -64,6 +66,7 @@ const App: React.FC = () => {
 
   return (
     <div className='App'>
+      {animation && window.scrollTo(0, 0)}
       {animation && (
         <Animation style={{ display: animation ? 'flex' : 'none' }} />
       )}
@@ -75,6 +78,7 @@ const App: React.FC = () => {
         <AuthRoute path='/resources' component={ResourcesPage} exact />
         <AuthRoute path='/dashboard' component={DashboardPage} exact />
         <AuthRoute path='/routes' component={RoutesPage} exact />
+        <Route path='/users/:username' component={UserPage} />
         <Route component={NotFound} />
       </Switch>
     </div>

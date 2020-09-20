@@ -1,28 +1,17 @@
-import { CARBON_SAVINGS, COLORS, ReducerContext } from '@app/common';
-import { Divider, Grid } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import { ReducerContext } from '@app/common';
 import React, { useContext } from 'react';
 import { UserContext } from '../../context/context';
-import SmallDataCard from './SmallDataCard';
-import SmallTextCard from './SmallTextCard';
-import CO2Statistics from './Segments/CO2Statistics';
-import DrivingConstants from './Segments/DrivingConstants';
-import UserComponent from './Segments/UserComponent';
+import MainUserComponent from './MainUserComponent';
+import Logs from './Segments/Logs';
 
 const DashboardBox = () => {
-  const { state, dispatch } = useContext<ReducerContext>(UserContext);
-
-  console.log(state.user);
+  const { state } = useContext<ReducerContext>(UserContext);
 
   return (
-    <Box boxShadow={4} bgcolor='background.paper' m={5} p={3} borderRadius={8}>
-      <UserComponent user={state.user} />
-      <CO2Statistics />
-      <Box m={2}>
-        <Divider />
-      </Box>
-      <DrivingConstants />
-    </Box>
+    <div>
+      <MainUserComponent user={state.user} />
+      <Logs />
+    </div>
   );
 };
 

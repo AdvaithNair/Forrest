@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Grid,
   Box,
@@ -11,8 +11,7 @@ import {
 import NatureIcon from '@material-ui/icons/Nature';
 import EcoIcon from '@material-ui/icons/Eco';
 import DirectionsIcon from '@material-ui/icons/Directions';
-import { ReducerContext, UserCredentials } from '@app/common';
-import { UserContext } from '../../../context/context';
+import { UserCredentials } from '@app/common';
 import Facebook from '../../../images/Socials/FacebookLogo.png';
 import Instagram from '../../../images/Socials/InstagramLogo.png';
 import Twitter from '../../../images/Socials/TwitterLogo.png';
@@ -108,18 +107,16 @@ interface Props {
   user: UserCredentials;
 }
 const UserComponent: React.FC<Props> = ({ user }) => {
-  const { state } = useContext<ReducerContext>(UserContext);
-
   const toSocialMedia = (provider: string) => {
     let url = '';
     if (provider === 'Facebook') {
-      url = state.user.facebook;
+      url = user.facebook;
     } else if (provider === 'Instagram') {
-      url = state.user.instagram;
+      url = user.instagram;
     } else if (provider === 'Twitter') {
-      url = state.user.twitter;
+      url = user.twitter;
     } else if (provider === 'Snapchat') {
-      url = state.user.snapchat;
+      url = user.snapchat;
     }
     window.open(url, '_blank');
   };
@@ -149,7 +146,7 @@ const UserComponent: React.FC<Props> = ({ user }) => {
         </Grid>
         <Grid item xs={6}>
           <img
-            className='profile-card-image'
+            className='profile-card-image social-main-image'
             src={`${user.imageURL}`}
             alt={user.username}
           ></img>
@@ -189,9 +186,9 @@ const UserComponent: React.FC<Props> = ({ user }) => {
         <Grid item sm>
           <MainStats
             title={'Trees Planted'}
-            statistic={state.user.carbonSaved / 500}
+            statistic={user.carbonSaved / 500}
             color={green}
-            units={state.user.carbonSaved / 500 === 1 ? 'tree' : 'trees'}
+            units={user.carbonSaved / 500 === 1 ? 'tree' : 'trees'}
           >
             <NatureIcon style={{ fontSize: bigIcon - 5 }} />
           </MainStats>
@@ -199,7 +196,7 @@ const UserComponent: React.FC<Props> = ({ user }) => {
         <Grid item sm>
           <MainStats
             title={'CO2 Saved'}
-            statistic={state.user.carbonSaved}
+            statistic={user.carbonSaved}
             color={green}
             units={'lbs'}
           >
@@ -209,9 +206,9 @@ const UserComponent: React.FC<Props> = ({ user }) => {
         <Grid item sm>
           <MainStats
             title={'Routes Taken'}
-            statistic={state.user.routesTaken}
+            statistic={user.routesTaken}
             color={green}
-            units={state.user.routesTaken === 1 ? 'route' : 'routes'}
+            units={user.routesTaken === 1 ? 'route' : 'routes'}
           >
             <DirectionsIcon style={{ fontSize: bigIcon - 5 }} />
           </MainStats>

@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
-import { COLORS, ReducerContext } from '@app/common';
+import { COLORS, ReducerContext, UserCredentials } from '@app/common';
 import { UserContext } from '../../../context/context';
 import { Grid } from '@material-ui/core';
 import SmallTextCard from '../SmallTextCard';
 
-const DrivingConstants = () => {
-  const { state } = useContext<ReducerContext>(UserContext);
+interface Props {
+  user: UserCredentials;
+}
 
+const DrivingConstants: React.FC<Props> = ({ user }) => {
   return (
     <Grid container direction='row' justify='space-evenly' alignItems='center'>
       <Grid item sm>
         <SmallTextCard
-          text={
-            state.user.carType == 'hybridSedan' ? 'hybrid' : state.user.carType
-          }
+          text={user.carType == 'hybridSedan' ? 'hybrid' : user.carType}
           title={'Current Vehicle'}
           icon={'car'}
           iconBackground={COLORS.SECONDARY}
@@ -21,7 +21,7 @@ const DrivingConstants = () => {
       </Grid>
       <Grid item sm>
         <SmallTextCard
-          text={state.user.avgHighwayOver.toString()}
+          text={user.avgHighwayOver.toString()}
           title={'Avg. Speed Over Limit on Highway'}
           icon={'speed'}
           iconBackground={COLORS.PRIMARY}
@@ -29,7 +29,7 @@ const DrivingConstants = () => {
       </Grid>
       <Grid item sm>
         <SmallTextCard
-          text={state.user.avgCityOver.toString()}
+          text={user.avgCityOver.toString()}
           title={'Avg. Speed Over Limit in City'}
           icon={'speed'}
           iconBackground={COLORS.PRIMARY}

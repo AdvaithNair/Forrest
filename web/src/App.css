@@ -184,3 +184,17 @@
 .profile-card-image-container:hover .profile-card-image-overlay {
   opacity: 1;
 }
+
+@media screen and (max-width: 670px) {
+  .social-main-image {
+    width: 150px;
+    height: 150px;
+  }
+}
+@media screen and (max-width: 475px) {
+  .social-main-image {
+    width: 75px;
+    height: 75px;
+    border: 3px solid black;
+  }
+}
