@@ -35,11 +35,13 @@ const Logs: React.FC = () => {
       >
         ROUTES
       </Typography>
+        /*
       <Grid container>
         {state.user.routeLogs.map((element: RouteLog, index: number) => (
           <LogElement logData={element} key={index} />
         ))}
       </Grid>
+      */
     </Box>
   );
 };
