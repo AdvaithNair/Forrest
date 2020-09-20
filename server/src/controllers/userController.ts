@@ -11,9 +11,9 @@ const checkCreds = async (res: Response, email: string) => {
     // Gets User by Email
     const user = await getRepository(User)
       .createQueryBuilder('user')
-      .innerJoinAndSelect('user.routeLogs', 'routeLogs')
-      .orderBy('routeLogs.date', 'DESC')
+      .leftJoinAndSelect('user.routeLogs', 'routeLogs')
       .where('email = :email', { email })
+      .orderBy('routeLogs.date', 'DESC')
       .getOne();
 
     if (!user)
@@ -67,6 +67,7 @@ export const signup = async (
       firstName,
       lastName
     }).save();
+    user.routeLogs = [];
     delete user.password;
     delete user.role;
     delete user.count;
@@ -186,7 +187,7 @@ export const getOwnInfo = async (_req: Request, res: Response) => {
     // Gets User
     const user = await getRepository(User)
       .createQueryBuilder('user')
-      .innerJoinAndSelect('user.routeLogs', 'routeLogs')
+      .leftJoinAndSelect('user.routeLogs', 'routeLogs')
       .orderBy('routeLogs.date', 'DESC')
       .getOne();
 

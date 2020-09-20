@@ -55,7 +55,7 @@ const SignUpForm = () => {
       currentErrors.username = ERRORS.SIGNUP.USERNAME_SHORT;
     else if (username.length > 25)
       currentErrors.username = ERRORS.SIGNUP.USERNAME_LONG;
-    else if (!email.match(USERNAME_REGEX))
+    else if (!username.match(USERNAME_REGEX))
       currentErrors.username = ERRORS.SIGNUP.USERNAME_INVALID;
     else currentErrors.username = '';
 

@@ -67,13 +67,13 @@ const Logs: React.FC = () => {
                 <TableCell component='th' scope='row'>
                   {row.route}
                 </TableCell>
-                <TableCell align='right'>{row.carbonSaved}</TableCell>
+                <TableCell align='right'>{`${row.carbonSaved} lbs`}</TableCell>
                 <TableCell align='right'>
-                  {row.carType === 'ELECTRIC'
+                  {`${row.carType === 'ELECTRIC'
                     ? (row.carbonSaved / 52).toFixed(2)
-                    : (row.carbonSaved / 20).toFixed(2)}
+                    : (row.carbonSaved / 20).toFixed(2)} lbs`}
                 </TableCell>
-                <TableCell align='right'>{`${row.estimatedDuration}m`}</TableCell>
+                <TableCell align='right'>{`${row.estimatedDuration} min`}</TableCell>
                 <TableCell align='right'>
                   {dayjs(row.date).format('MMM D, YYYY')}
                 </TableCell>
