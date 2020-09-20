@@ -17,6 +17,11 @@ export const STOP = {
   LIGHT_TIME: 55
 };
 
+export const CO2EMISSIONS = {
+  GAS: 20,
+  ELECTRIC: 52
+};
+
 // Idling Variable
 export const IDLING: number = 0.5;
 

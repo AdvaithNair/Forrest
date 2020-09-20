@@ -31,6 +31,7 @@ export declare const ERRORS: {
         UNABLE: string;
         USERNAME_SHORT: string;
         USERNAME_LONG: string;
+        USERNAME_INVALID: string;
     };
     SIGNIN: {
         USER_NONEXISTENT: string;

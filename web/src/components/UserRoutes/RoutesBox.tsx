@@ -1,4 +1,4 @@
-import { ERRORS, ReducerContext } from '@app/common';
+import { ReducerContext } from '@app/common';
 import {
   Button,
   Step,
@@ -9,29 +9,23 @@ import {
 import Box from '@material-ui/core/Box';
 import React, { useContext, useState } from 'react';
 import { UserContext } from '../../context/context';
-import LanguageIcon from '@material-ui/icons/Language';
 import RouteSelectionForm from './RouteSelectionForm';
 import RouteCalculationForm from './RouteCalculationSelectionForm';
+import CustomSnackbar from '../General/Utility/Snackbar';
+import axios from '../../utils/axios';
 
 interface RouteInfo {
   start: string;
   end: string;
 }
 
-function getSteps() {
-  return ['Select Start and End Locations', 'Choose Route', 'Confirm Arrival'];
+interface ChosenRoute {
+  name: string;
+  CO2Saved: string;
 }
 
-function getStepContent(stepIndex: number) {
-  switch (stepIndex) {
-    case 0:
-      return;
-    case 1:
-      return 'C';
-    case 2:
-      return <LanguageIcon />;
-    default:
-  }
+function getSteps() {
+  return ['Select Start and End Locations', 'Choose Route', 'Confirm Arrival'];
 }
 
 const UserRoutesBox = () => {
@@ -42,7 +36,11 @@ const UserRoutesBox = () => {
     end: ''
   });
 
-  const [activeStep, setActiveStep] = React.useState<number>(1);
+  const [open, setOpen] = useState<string>('');
+
+  const [readyToStart, setReadyToStart] = React.useState<boolean>(false);
+
+  const [activeStep, setActiveStep] = React.useState<number>(0);
   const steps = getSteps();
 
   const doNothing = () => {
@@ -62,14 +60,23 @@ const UserRoutesBox = () => {
       />
     );
   } else if (activeStep == 1) {
-    stepContent = (
-      <RouteCalculationForm onEditStart={doNothing} onEditEnd={doNothing} />
-    );
+    stepContent = <RouteCalculationForm start={input.start} end={input.end} />;
   } else {
     stepContent = 'Unknown stepIndex';
   }
 
-  console.log(input);
+  const startRouteLog = () => {
+    axios
+      .post('/api/user/log/add', {
+        route: state.currentRoute.route,
+        carbonSaved: state.currentRoute.co2saved,
+        estimatedDuration: state.currentRoute.duration
+      })
+      .then((res: any) => {})
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
 
   const handleNext = () => {
     if (activeStep == 0) {
@@ -82,6 +89,14 @@ const UserRoutesBox = () => {
         return;
       }
     } else if (activeStep == 1) {
+      console.log(state.currentRoute);
+      if (!state.currentRoute.route) {
+        setOpen('Make sure to click on the chosen route');
+        return;
+      } else {
+        startRouteLog();
+      }
+    } else if (activeStep == 2) {
     }
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
@@ -90,12 +105,21 @@ const UserRoutesBox = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
+  const startRoute = () => {
+    setReadyToStart(true);
+  };
+
   const handleReset = () => {
     setActiveStep(0);
+    setReadyToStart(false);
+    setInput({
+      start: '',
+      end: ''
+    });
   };
 
   return (
-    <Box boxShadow={4} bgcolor='background.paper' m={5} p={3} borderRadius={8}>
+    <Box boxShadow={4} bgcolor='background.paper' m={2} p={3} borderRadius={8}>
       <div>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map(label => (
@@ -133,6 +157,7 @@ const UserRoutesBox = () => {
           )}
         </div>
       </div>
+      <CustomSnackbar openStr={open} />
     </Box>
   );
 };

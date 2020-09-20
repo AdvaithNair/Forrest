@@ -146,7 +146,7 @@ const UserComponent: React.FC<Props> = ({ user }) => {
         </Grid>
         <Grid item xs={6}>
           <img
-            className='profile-card-image social-main-image'
+            className='social-main-image'
             src={`${user.imageURL}`}
             alt={user.username}
           ></img>

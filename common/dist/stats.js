@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.INTERSECTION_TYPES = exports.AVOID_TYPES = exports.TRAFFIC_TYPES = exports.CITY_SPEEDS = exports.IDLING = exports.STOP = exports.FUEL_ECONOMY = void 0;
+exports.INTERSECTION_TYPES = exports.AVOID_TYPES = exports.TRAFFIC_TYPES = exports.CITY_SPEEDS = exports.IDLING = exports.CO2EMISSIONS = exports.STOP = exports.FUEL_ECONOMY = void 0;
 exports.FUEL_ECONOMY = {
     SEDAN: 24.2,
     HYBRID_SEDAN: 47.3,
@@ -15,6 +15,10 @@ exports.STOP = {
     SIGN_TIME: 4,
     LIGHT_RATE: 0.3,
     LIGHT_TIME: 55
+};
+exports.CO2EMISSIONS = {
+    GAS: 20,
+    ELECTRIC: 52
 };
 exports.IDLING = 0.5;
 exports.CITY_SPEEDS = 45;

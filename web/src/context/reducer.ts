@@ -72,6 +72,16 @@ export const reducer = (state: any, action: any) => {
         ...state,
         homePage: false
       };
+    case STATE.SET_CURRENT_ROUTE:
+      return {
+        ...state,
+        currentRoute: action.payload
+      };
+    case STATE.CLEAR_CURRENT_ROUTE:
+      return {
+        ...state,
+        currentRoute: initialState.currentRoute
+      };
     default:
       return state;
   }

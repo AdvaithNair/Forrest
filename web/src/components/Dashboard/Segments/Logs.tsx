@@ -1,8 +1,21 @@
-import React, { useContext } from 'react';
-import { Box, Typography, Grid, Card, CardContent } from '@material-ui/core';
+import React, { useContext, useState } from 'react';
+import {
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody
+} from '@material-ui/core';
 import { ReducerContext, RouteLog } from '@app/common';
 import { UserContext } from '../../../context/context';
-
+import dayjs from 'dayjs';
 interface Props {
   logData: RouteLog;
 }
@@ -35,11 +48,45 @@ const Logs: React.FC = () => {
       >
         ROUTES
       </Typography>
-      <Grid container>
-        {state.user.routeLogs.map((element: RouteLog, index: number) => (
-          <LogElement logData={element} key={index} />
-        ))}
-      </Grid>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Route</TableCell>
+              <TableCell align='right'>CO2 Saved</TableCell>
+              <TableCell align='right'>Energy Saved</TableCell>
+              <TableCell align='right'>Duration</TableCell>
+              <TableCell align='right'>Date</TableCell>
+              <TableCell align='right'>Vehicle</TableCell>
+              <TableCell align='right'>Verified</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {state.user.routeLogs.map(row => (
+              <TableRow key={row.route}>
+                <TableCell component='th' scope='row'>
+                  {row.route}
+                </TableCell>
+                <TableCell align='right'>{row.carbonSaved}</TableCell>
+                <TableCell align='right'>
+                  {row.carType === 'ELECTRIC'
+                    ? (row.carbonSaved / 52).toFixed(2)
+                    : (row.carbonSaved / 20).toFixed(2)}
+                </TableCell>
+                <TableCell align='right'>{`${row.estimatedDuration}m`}</TableCell>
+                <TableCell align='right'>
+                  {dayjs(row.date).format('MMM D, YYYY')}
+                </TableCell>
+                <TableCell align='right'>
+                  {row.carType.charAt(0).toUpperCase() +
+                    row.carType.toLowerCase().slice(1)}
+                </TableCell>
+                <TableCell align='right'>{row.verified ? 'Y' : 'N'}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };

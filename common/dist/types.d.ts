@@ -10,8 +10,20 @@ export interface GlobalState {
     homePage: boolean;
     isSignup: boolean;
     darkMode: boolean;
+    currentRoute: CurrentRoute;
     currentPage: string;
     user: UserCredentials;
+}
+export interface CurrentRoute {
+    route: string;
+    co2saved: number;
+    duration: number;
+    startingLoc: DataPoints;
+    endingLoc: DataPoints;
+}
+export interface DataPoints {
+    lat: number;
+    lng: number;
 }
 export interface ReducerContext {
     state: GlobalState;
@@ -43,5 +55,6 @@ export interface RouteLog {
     avgHighwayOver: number;
     avgCityOver: number;
     carbonSaved: number;
+    estimatedDuration: number;
     verified: boolean;
 }

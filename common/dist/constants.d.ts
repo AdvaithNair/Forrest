@@ -5,4 +5,5 @@ export declare const BUCKET_URL: string;
 export declare const DB_NAME: string;
 export declare const BCRYPT_SALT: number;
 export declare const EMAIL_REGEX: RegExp;
+export declare const USERNAME_REGEX: RegExp;
 export declare const PROJECT_NAME: string;

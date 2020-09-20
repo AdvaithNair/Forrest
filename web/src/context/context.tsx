@@ -14,6 +14,19 @@ export const initialState: GlobalState = {
   isSignup: false,
   darkMode: true,
   homePage: true,
+  currentRoute: {
+    route: '',
+    co2saved: 0,
+    duration: 0,
+    startingLoc: {
+      lat: 0,
+      lng: 0
+    },
+    endingLoc: {
+      lat: 0,
+      lng: 0
+    }
+  },
   currentPage: 'dashboard',
   user: {
     id: -1,
