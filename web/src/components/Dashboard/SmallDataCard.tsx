@@ -68,7 +68,7 @@ const SmallDataCard: React.FC<Props> = ({
 
   // @ts-ignore
   return (
-    <Box m={2} style={{ position: 'relative', minWidth: '290px' }}>
+    <Box m={2} style={{ position: 'relative', minWidth: '240px' }}>
       <Card style={{ backgroundColor: '#DDDDDD', height: 175 }}>
         <CardContent>
           <Avatar
