@@ -41,17 +41,16 @@ const SearchComponent = () => {
         console.log('Doing nothing');
     };
 
-
     return (
         <div>
             <Dialog open={menuOpen} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Friend Search!</DialogTitle>
                 <DialogContent>
-                    <Box width={450}>
+                    <Box width={300}>
                         <Grid
                             container
                             direction="row"
-                            justify="space-between"
+                            justify="center"
                             alignItems="center"
                         >
                             <TextField
@@ -76,7 +75,7 @@ const SearchComponent = () => {
                                     alignItems="center"
                                 >
                                     {results.map((data: any) =>
-                                        <li>{data.username}</li>
+                                        <Button onClick={() => history.push(`/users/${data.username}`)} color="primary">{data.username} - {data.carbonSaved} lbs of carbon saved</Button>
                                     )}
                                 </Grid>
                             </Grid>
