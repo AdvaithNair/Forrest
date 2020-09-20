@@ -84,7 +84,6 @@ const Logs: React.FC = () => {
                   {row.carType === 'ELECTRIC'
                     ? `${((row.carbonSaved / 52) * 60).toFixed(2)} kWh`
                     : `${(row.carbonSaved / 20).toFixed(2)} gal`}
-                  }
                 </TableCell>
                 <TableCell align='right'>{`${row.estimatedDuration} min`}</TableCell>
                 <TableCell align='right'>
