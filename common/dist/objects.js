@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CARBON_SAVINGS = exports.CAR_TYPES = exports.USER_DRIVE_DEFAULTS = exports.FILE_UPLOADS = exports.LOCALSTORAGE = exports.COLORS = exports.ERRORS = exports.TOKEN_DURATIONS = exports.COOKIE_NAMES = exports.USER_ROLES = void 0;
 exports.USER_ROLES = {
     USER: 'USER',
     ADMIN: 'ADMIN',
@@ -33,7 +32,8 @@ exports.ERRORS = {
         EMAIL_USERNAME_IN_USE: 'Email or Username Already In Use',
         UNABLE: 'Unable To Sign Up User',
         USERNAME_SHORT: 'Username Too Short',
-        USERNAME_LONG: 'Username Too Long'
+        USERNAME_LONG: 'Username Too Long',
+        USERNAME_INVALID: 'Username Contains Invalid Characters'
     },
     SIGNIN: {
         USER_NONEXISTENT: 'User Does Not Exist'

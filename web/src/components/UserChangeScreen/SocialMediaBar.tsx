@@ -76,7 +76,6 @@ const SocialMediaBar: React.FC<Props> = ({
           console.log(error);
         });
   };
-  console.log(state.user)
   return (
     <Box
       boxShadow={4}

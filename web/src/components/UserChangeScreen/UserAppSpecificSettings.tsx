@@ -1,7 +1,7 @@
 import Box from '@material-ui/core/Box';
 import React, {useContext, useState} from 'react';
 import {Button, Grid, InputLabel, MenuItem, Select, Slider, Typography} from '@material-ui/core';
-import {ReducerContext} from '@app/common';
+import {CAR_TYPES, ReducerContext} from '@app/common';
 import {UserContext} from '../../context/context';
 import axios from '../../utils/axios';
 import {clearLoading, setLoading} from '../../context/loading';
@@ -10,8 +10,8 @@ import CustomSnackbar from '../General/Utility/Snackbar';
 
 interface UserInfo {
     carType: any;
-    highwayOver: number;
-    cityOver: number;
+    avgHighwayOver: any;
+    avgCityOver: any;
 }
 
 const UserAppSpecificSettings = () => {
@@ -19,9 +19,9 @@ const UserAppSpecificSettings = () => {
     const {dispatch} = useContext<ReducerContext>(UserContext);
 
     const [input, setInput] = useState<UserInfo>({
-        carType: 'sedan',
-        cityOver: 0,
-        highwayOver: 0
+        carType: state.user.carType,
+        avgHighwayOver: state.user.avgHighwayOver,
+        avgCityOver: state.user.avgCityOver
     });
 
     const [open, setOpen] = useState<string>('');
@@ -29,7 +29,7 @@ const UserAppSpecificSettings = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         axios
-            .put('/api/user/update', input)
+            .put('/api/user/update/drive', {'parameters': input})
             .then((res: any) => {
                 // Set State Here
                 setLoading(dispatch);
@@ -60,13 +60,13 @@ const UserAppSpecificSettings = () => {
                         value={input.carType}
                         onChange={e => setInput({...input, carType: e.target.value})}
                     >
-                        <MenuItem value={'sedan'}>Sedan</MenuItem>
-                        <MenuItem value={'hybridSedan'}>Hybrid</MenuItem>
-                        <MenuItem value={'truck'}>Truck</MenuItem>
-                        <MenuItem value={'van'}>Van</MenuItem>
-                        <MenuItem value={'SUV'}>SUV</MenuItem>
-                        <MenuItem value={'motorcycle'}>Motorcycle</MenuItem>
-                        <MenuItem value={'electric'}>Electric Vehicle</MenuItem>
+                        <MenuItem value={CAR_TYPES.SEDAN}>Sedan</MenuItem>
+                        <MenuItem value={CAR_TYPES.HYBRID_SEDAN}>Hybrid</MenuItem>
+                        <MenuItem value={CAR_TYPES.TRUCK}>Truck</MenuItem>
+                        <MenuItem value={CAR_TYPES.VAN}>Van</MenuItem>
+                        <MenuItem value={CAR_TYPES.SUV}>SUV</MenuItem>
+                        <MenuItem value={CAR_TYPES.MOTORCYCLE}>Motorcycle</MenuItem>
+                        <MenuItem value={CAR_TYPES.ELECTRIC}>Electric Vehicle</MenuItem>
                     </Select>
                 </Box>
                 <Grid container
@@ -79,13 +79,14 @@ const UserAppSpecificSettings = () => {
                             Speed Over Limit on Highway
                         </Typography>
                         <Slider
-                            defaultValue={0}
+                            defaultValue={input.avgHighwayOver}
                             aria-labelledby="continuous-slider"
                             step={1}
                             marks
                             min={0}
                             max={15}
                             valueLabelDisplay="auto"
+                            onChange={(e, val) => setInput({...input, avgHighwayOver: val})}
                         />
                         </Box>
                     </Grid>
@@ -95,13 +96,14 @@ const UserAppSpecificSettings = () => {
                             Speed Over Limit in City
                         </Typography>
                         <Slider
-                            defaultValue={0}
+                            defaultValue={input.avgCityOver}
                             aria-labelledby="continuous-slider"
                             step={1}
                             marks
                             min={0}
                             max={15}
                             valueLabelDisplay="auto"
+                            onChange={(e, val) => setInput({...input, avgCityOver: val})}
                         />
                         </Box>
                 </Grid>

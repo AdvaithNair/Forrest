@@ -15,6 +15,7 @@ import {
   secondsToHours
 } from '../utils/conversions';
 import roadSnapRequest from "../utils/roadSnap";
+import parseUser from "../utils/parseUser";
 
 const TEST_INFO = {
   origin: '210 Euclid Ave, Delaware OH 43015',
@@ -31,7 +32,8 @@ interface DataPoints {
 
 interface RouteData {
   route: string;
-  efficiency: number;
+  fuelEfficiency: number;
+  duration: number;
   latLon?: Array<DataPoints>;
   directions?: Array<string>;
 }
@@ -210,22 +212,30 @@ const getRouteOptions = async (
 };
 
 //This function processes the routes
-export const getBestRoutes = async (_req: Request, res: Response) => {
+export const getBestRoutes = async (req: Request, res: Response) => {
   try {
+
+    const { id } = res.locals.payload;
+    const { start, end } = req.query;
+
+    // Get User
+    const userData = await parseUser(id);
+    if (!userData) throw new Error();
+
     //Get the routes
     const routes = await getRouteOptions(
-        TEST_INFO.origin,
-        TEST_INFO.destination,
-        TEST_INFO.carType,
-        TEST_INFO.avgHighwayOver,
-        TEST_INFO.avgCityOver
+        (start as string),
+        (end as string),
+        userData.carType,
+        userData.avgHighwayOver,
+        userData.avgCityOver
     );
 
     //Establish variables
-    let slowestRoute: RouteData = { route: '', efficiency: 0 };
-    let fastestRoute: RouteData = { route: '', efficiency: 10000 };
-    let worstEfficiency: RouteData = { route: '', efficiency: 0 };
-    let bestEfficiency: RouteData = { route: '', efficiency: 10000 };
+    let slowestRoute: RouteData = { route: '', fuelEfficiency: 0, duration: 0 };
+    let fastestRoute: RouteData = { route: '', fuelEfficiency: 0, duration: 10000 };
+    let worstEfficiency: RouteData = { route: '', fuelEfficiency: 0, duration: 0 };
+    let bestEfficiency: RouteData = { route: '', fuelEfficiency: 10000, duration: 0 };
     //console.log(routes);
     let route: any;
     //console.log(Object.keys(routes));
@@ -234,40 +244,44 @@ export const getBestRoutes = async (_req: Request, res: Response) => {
       //established in the variables above
       if (
         (routes as any)[route]['estimatedTimeWithTraffic'] >
-        slowestRoute.efficiency
+        slowestRoute.duration
       )
         slowestRoute = {
           route,
-          efficiency:
+          duration:
             (Math.round((routes as any)[route]['estimatedTimeWithTraffic']*100)) /
-            100
+            100,
+          fuelEfficiency: (routes as any)[route]['fuelConsumption']
         };
       if (
         (routes as any)[route]['estimatedTimeWithTraffic'] <
-        fastestRoute.efficiency
+        fastestRoute.duration
       )
         fastestRoute = {
           route,
-          efficiency:
+          duration:
             (Math.round((routes as any)[route]['estimatedTimeWithTraffic'] * 100)
               ) /
-            100
+            100,
+          fuelEfficiency: (routes as any)[route]['fuelConsumption']
         };
       if (
-        (routes as any)[route]['fuelConsumption'] > worstEfficiency.efficiency
+        (routes as any)[route]['fuelConsumption'] > worstEfficiency.fuelEfficiency
       )
         worstEfficiency = {
           route,
-          efficiency:
+          fuelEfficiency:
             (Math.round((routes as any)[route]['fuelConsumption'] *100 )) /
-            100
+            100,
+          duration: (routes as any)[route]['estimatedTimeWithTraffic']
         };
-      if ((routes as any)[route]['fuelConsumption'] < bestEfficiency.efficiency)
+      if ((routes as any)[route]['fuelConsumption'] < bestEfficiency.fuelEfficiency)
         bestEfficiency = {
           route,
-          efficiency:
+          fuelEfficiency:
             (Math.round((routes as any)[route]['fuelConsumption']*100)) /
-            100
+            100,
+          duration: (routes as any)[route]['estimatedTimeWithTraffic']
         };
     }
 
