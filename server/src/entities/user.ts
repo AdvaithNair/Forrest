@@ -1,4 +1,10 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  OneToMany
+} from 'typeorm';
 import { BUCKET_URL, USER_ROLES, USER_DRIVE_DEFAULTS } from '@app/common';
 import RouteLog from './routeLog';
 
@@ -54,7 +60,7 @@ export default class User extends BaseEntity {
   @Column({ default: USER_DRIVE_DEFAULTS.AVERAGE_MPH_OVER_CITY })
   avgCityOver: number;
 
-  @Column({ default: 0 })
+  @Column('float', { default: 0 })
   carbonSaved: number;
 
   @Column({ default: 0 })

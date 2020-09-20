@@ -27,10 +27,10 @@ export default class RouteLog extends BaseEntity {
   @Column()
   avgCityOver: number;
 
-  @Column()
+  @Column('float')
   carbonSaved: number;
 
-  @Column()
+  @Column('float')
   estimatedDuration: number; // Minutes
 
   @Column('text')

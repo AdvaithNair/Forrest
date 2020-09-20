@@ -371,6 +371,7 @@ export const confirmRoute = async (req: Request, res: Response) => {
     const logEntry = await RouteLog.findOne({
       where: { userID: id, route, verified: false }
     });
+    console.log(logEntry);
     if (!logEntry) throw new Error();
 
     // Update Log Entry
