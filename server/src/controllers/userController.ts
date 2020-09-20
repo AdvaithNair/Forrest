@@ -424,7 +424,7 @@ export const getUser = async (req: Request, res: Response) => {
 export const searchUser = async (req: Request, res: Response) => {
   try {
     const { username } = req.query;
-    const queryLimit = 10;
+    const queryLimit = 3;
 
     // Gets Users
     const users = await getRepository(User)

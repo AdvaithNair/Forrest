@@ -1,18 +1,98 @@
-import TextEntry from "../Entry/TextEntry";
-import React, {useState} from "react";
-import {Box} from "@material-ui/core";
+import React, {useEffect, useState} from "react";
+import {Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid} from "@material-ui/core";
+import TextField from "@material-ui/core/TextField/TextField";
+import {useHistory} from "react-router-dom";
+import axios from "../../../utils/axios";
 
 const SearchComponent = () => {
 
-    const [username, setUsername] = useState<string>('');
+    const history = useHistory();
 
+    const [username, setUsername] = useState<string>('');
+    const [menuOpen, setMenuOpen] = useState<boolean>(false);
+    const [results, setResults] = useState<Array<any>>([]);
+
+    useEffect(() => {
+            axios
+                .get('/api/user/search', {
+                    params: {
+                        username: username
+                    }
+                })
+                .then((res: any) => {
+                    console.log(res.data);
+                    setResults(res.data);
+                })
+                .catch((error: any) => {
+                    console.log(error);
+                });
+        }, [username]
+    )
+
+    const handleClose = () => {
+        setMenuOpen(false);
+    };
+
+    const handleOpen = () => {
+        setMenuOpen(true);
+    };
+
+    const doNothing = () => {
+        console.log('Doing nothing');
+    };
 
 
     return (
-        <Box width={150}>
-            <TextEntry onChange={(e: { target: { value: any; }; }) => setUsername(e.target.value)}
-                       helperText={''} label={'Search'} required={false} fullWidth={true} error={false}/>
-        </Box>
+        <div>
+            <Dialog open={menuOpen} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Friend Search!</DialogTitle>
+                <DialogContent>
+                    <Box width={450}>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="space-between"
+                            alignItems="center"
+                        >
+                            <TextField
+                                label={''}
+                                type={'text'}
+                                onChange={(e: { target: { value: any; }; }) => {
+                                    setUsername(e.target.value)
+                                }}
+                                error={false}
+                                helperText={'User Search'}
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth={false}
+                                required={false}
+                                style={{'backgroundColor': 'white', 'borderRadius': 8}}
+                            />
+                            <Grid item>
+                                <Grid
+                                    container
+                                    direction="column"
+                                    justify="center"
+                                    alignItems="center"
+                                >
+                                    {results.map((data: any) =>
+                                        <li>{data.username}</li>
+                                    )}
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Button onClick={handleOpen} color="primary">
+                Friend Search
+            </Button>
+        </div>
     );
 }
 

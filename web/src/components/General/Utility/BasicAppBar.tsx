@@ -12,6 +12,7 @@ import HeaderLogo from '../../../images/Branding/HeaderLogo.png';
 import MenuIcon from '@material-ui/icons/Menu';
 import BasicDrawer from './BasicDrawer';
 import { useHistory } from 'react-router-dom';
+import SearchComponent from "./SearchComponent";
 
 const BasicAppBar: React.FC = () => {
   const history = useHistory();
@@ -59,6 +60,9 @@ const BasicAppBar: React.FC = () => {
                   />
                 </Grid>
               </Box>
+            </Grid>
+            <Grid item>
+              <SearchComponent/>
             </Grid>
             <Grid item>
               <Button onClick={() => history.push('/settings')} color='inherit'>
