@@ -10,11 +10,11 @@ const checkCreds = async (res: Response, email: string) => {
   try {
     // Gets User by Email
     const user = await getRepository(User)
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.routeLogs', 'routeLogs')
-      .where('email = :email', { email })
-      .orderBy('routeLogs.date', 'DESC')
-      .getOne();
+        .createQueryBuilder('user')
+        .leftJoinAndSelect('user.routeLogs', 'routeLogs')
+        .where('email = :email', { email })
+        .orderBy('routeLogs.date', 'DESC')
+        .getOne();
 
     if (!user)
       return {
@@ -41,9 +41,9 @@ const checkCreds = async (res: Response, email: string) => {
 
 // Signup Route
 export const signup = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
+    req: Request,
+    res: Response,
+    next: NextFunction
 ) => {
   const { username, password, email, firstName, lastName } = req.body;
 
@@ -90,9 +90,9 @@ export const signup = async (
 
 // Signin Route
 export const signin = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
+    req: Request,
+    res: Response,
+    next: NextFunction
 ) => {
   const { email, password } = req.body;
 
@@ -107,8 +107,8 @@ export const signin = async (
 
     // Validates Password
     const isPasswordValid = await bcrypt.compare(
-      password,
-      (user as any).password
+        password,
+        (user as any).password
     );
     if (!isPasswordValid) {
       return res.status(400).json({
@@ -138,11 +138,11 @@ export const signout = async (_req: Request, res: Response) => {
 
     // Updates Count
     getConnection()
-      .createQueryBuilder()
-      .update(User)
-      .set({ count: () => 'count + 1' })
-      .where('id = :id', { id: res.locals.payload.id })
-      .execute();
+        .createQueryBuilder()
+        .update(User)
+        .set({ count: () => 'count + 1' })
+        .where('id = :id', { id: res.locals.payload.id })
+        .execute();
 
     // Clears Cookies
     res.clearCookie(COOKIE_NAMES.REFRESH);
@@ -221,13 +221,13 @@ export const uploadProfilePicture = async (req: Request, res: Response) => {
     // Sets New Image URL
     const imageURL = `${BUCKET_URL}/uploads/profile-pictures/${file.filename}`;
     await getConnection()
-      .createQueryBuilder()
-      .update(User)
-      .set({
-        imageURL
-      })
-      .where('id = :id', { id })
-      .execute();
+        .createQueryBuilder()
+        .update(User)
+        .set({
+          imageURL
+        })
+        .where('id = :id', { id })
+        .execute();
 
     res.json({
       imageURL
@@ -428,12 +428,12 @@ export const searchUser = async (req: Request, res: Response) => {
 
     // Gets Users
     const users = await getRepository(User)
-      .createQueryBuilder('user')
-      .orderBy('user.username')
-      .select(['user.username', 'user.imageURL', 'user.carbonSaved'])
-      .where('user.username like :name', { name: `%${username}%` })
-      .limit(queryLimit)
-      .getMany();
+        .createQueryBuilder('user')
+        .orderBy('user.username')
+        .select(['user.username', 'user.imageURL', 'user.carbonSaved'])
+        .where('user.username like :name', { name: `%${username}%` })
+        .limit(queryLimit)
+        .getMany();
 
     res.json(users);
   } catch {
