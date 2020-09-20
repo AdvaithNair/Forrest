@@ -6,7 +6,10 @@ interface Props {
 }
 const Animation: React.FC<Props> = ({ style }) => {
   return (
-    <div className={'landing-background fade-animation'} style={style}>
+    <div
+      className={'landing-background fade-animation'}
+      style={{ ...style, position: 'fixed' }}
+    >
       <img src={Icon} alt={'Animation'} className={'landing-icon'} />
     </div>
   );

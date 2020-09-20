@@ -188,6 +188,7 @@ export const getOwnInfo = async (_req: Request, res: Response) => {
     const user = await getRepository(User)
       .createQueryBuilder('user')
       .leftJoinAndSelect('user.routeLogs', 'routeLogs')
+      .where('user.id = :id', { id: res.locals.payload.id })
       .orderBy('routeLogs.date', 'DESC')
       .getOne();
 
