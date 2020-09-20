@@ -39,7 +39,7 @@ const UserPage: React.FC<Props> = ({ match }) => {
         // Set User
         setUser(res.data);
       });
-  }, []);
+  }, [match.params.username]);
 
   return (
     <div>

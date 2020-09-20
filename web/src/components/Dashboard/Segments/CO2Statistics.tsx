@@ -29,7 +29,7 @@ const CO2Statistics: React.FC<Props> = ({ user }) => {
         <SmallDataCard
           data={user.carbonSaved}
           max={CARBON_SAVINGS.CARBON_PER_TREE}
-          title={'C02 Saved Until Next Tree'}
+          title={'CO2 Saved Until Next Tree'}
           icon={'cloud'}
           iconBackground={COLORS.PRIMARY}
           unit={'lbs'}
