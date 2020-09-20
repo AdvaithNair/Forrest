@@ -1,11 +1,10 @@
-# TypeScript Full Stack Boilerplate App
+# Forrest
 
-This is a simple boilerplate structure for an app with a pre-built auth system.
-Feel free to steal my code.
+Forrest is an application intended to help users plot fast and environmentally friendly drive routes and track their environmental savings. These routes include energy and CO2 saving paths. Forrest uses the Google Maps API and Google Directions API to generate the most efficient routes for users. Finally, Forrest acts as a bridge to becoming a social media, with the capabilities to extend its own features to become a utility-social-media hybrid application.
 
 NOTE: If you spot a bug, please contact me at [advaithnair2@gmail.com](mailto:advaithnair2@gmail.com)/[adn323@lehigh.edu](mailto:adn323@lehigh.edu) or Dom at [d-hupp@onu.edu](mailto:d-hupp@onu.edu).
 
-The boilerplate contains the following features:
+Forrest contains the following features:
 
 - Testing Ping Route
 - Auth Functions
@@ -15,6 +14,10 @@ The boilerplate contains the following features:
   - Three levels of Authorization(User, Admin, Owner)
 - Common Folder with constants, objects, types, and secrets
 - MaterialUI
+- Google Maps Interface
+- Google Directions API
+- Responsive Design
+- Search for Users
 
 ## Technology Overview
 
@@ -31,6 +34,9 @@ It utilizes the following technologies:
   - TypeORM
   - JSON Web Token
   - BcryptJS
+- APIs
+  - Google Maps
+  - Google Directions
 
 All code is constructed using TypeScript.
 
@@ -50,7 +56,7 @@ All code is constructed using TypeScript.
 
 ### Commands
 
-Execute these commands to ensure the boilerplate can run properly. Run these in the root directory.
+Execute these commands to ensure Forrest can run properly. Run these in the root directory.
 
 #### Install Packages
 
@@ -74,29 +80,23 @@ yarn server
 
 ```
 yarn common
+
+OR
+
+cd common && tsc
 ```
 
 NOTE: You probably want to run web, server, and common in three seperate terminals. They use hot reloading.
-
-## What I Learned
-
-### Frontend
-
-- It's not as fun as backend
-
-### Backend
-
-- I'm pretty decent at this
 
 ## Contributors
 
 - **Advaith Nair**
 
-  - _Full Stack (Mostly Backend) Developer_
+  - _Full Stack Developer_
   - [Website](https://advaithnair.com)
 
 - **Dominic Hupp**
-  - _Full Stack (Mostly Frontend) Developer_
+  - _Full Stack Developer_
   - [Website](https://domhupp.space/)
 
 ## Contact
