@@ -50,6 +50,7 @@ const App: React.FC = () => {
       .get('/api/user/')
       .then((res: AxiosResponse) => {
         // Sets State
+        console.log(res.data)
         dispatch({ type: STATE.SET_USER, payload: res.data });
         // history.push('/');
       })

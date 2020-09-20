@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.INTERSECTION_TYPES = exports.AVOID_TYPES = exports.TRAFFIC_TYPES = exports.CITY_SPEEDS = exports.IDLING = exports.CO2EMISSIONS = exports.STOP = exports.FUEL_ECONOMY = void 0;
 exports.FUEL_ECONOMY = {
     SEDAN: 24.2,
     HYBRID_SEDAN: 47.3,

@@ -69,6 +69,7 @@ export const validateUser = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log(res.locals.payload);
   // Get Tokens from Cookies or Headers
   const refreshToken = req.cookies[COOKIE_NAMES.REFRESH];
   const accessToken = req.cookies[COOKIE_NAMES.ACCESS];
@@ -87,6 +88,7 @@ export const validateUser = async (
         ...res.locals,
         payload: { ...res.locals.payload, id: accessData.id }
       };
+      console.log(res.locals.payload.id)
       return next();
     } catch {}
   }
