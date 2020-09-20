@@ -32,7 +32,8 @@ exports.ERRORS = {
         EMAIL_USERNAME_IN_USE: 'Email or Username Already In Use',
         UNABLE: 'Unable To Sign Up User',
         USERNAME_SHORT: 'Username Too Short',
-        USERNAME_LONG: 'Username Too Long'
+        USERNAME_LONG: 'Username Too Long',
+        USERNAME_INVALID: 'Username Contains Invalid Characters'
     },
     SIGNIN: {
         USER_NONEXISTENT: 'User Does Not Exist'

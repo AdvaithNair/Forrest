@@ -15,6 +15,10 @@ exports.STOP = {
     LIGHT_RATE: 0.3,
     LIGHT_TIME: 55
 };
+exports.CO2EMISSIONS = {
+    GAS: 20,
+    ELECTRIC: 52
+};
 exports.IDLING = 0.5;
 exports.CITY_SPEEDS = 45;
 exports.TRAFFIC_TYPES = ['best_guess', 'pessimistic', 'optimistic'];

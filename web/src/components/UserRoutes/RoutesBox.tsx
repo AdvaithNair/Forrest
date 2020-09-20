@@ -40,7 +40,7 @@ const UserRoutesBox = () => {
             onEditStart={(e: { target: { value: any; }; }) => setInput({...input, start: e.target.value})}
             onEditEnd={(e: { target: { value: any; }; }) => setInput({...input, end: e.target.value})}/>;
     } else if (activeStep == 1) {
-        stepContent = <RouteCalculationForm onEditStart={doNothing} onEditEnd={doNothing}/>
+        stepContent = <RouteCalculationForm start={input.start} end={input.end} onEditStart={doNothing} onEditEnd={doNothing}/>
     } else {
         stepContent = 'Unknown stepIndex';
     }
@@ -69,6 +69,7 @@ const UserRoutesBox = () => {
     const handleReset = () => {
         setActiveStep(0);
         setReadyToStart(false);
+        setInput({start: "", end: ""})
     };
 
     return (

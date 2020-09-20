@@ -13,6 +13,10 @@ export declare const STOP: {
     LIGHT_RATE: number;
     LIGHT_TIME: number;
 };
+export declare const CO2EMISSIONS: {
+    GAS: number;
+    ELECTRIC: number;
+};
 export declare const IDLING: number;
 export declare const CITY_SPEEDS: number;
 export declare const TRAFFIC_TYPES: string[];

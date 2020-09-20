@@ -9,10 +9,12 @@ import RouteSelector from "./RouteSelector";
 interface Props {
     onEditStart: any;
     onEditEnd: any;
+    start: string;
+    end: string;
 }
 
 
-const RouteCalculationForm: React.FC<Props> = ({onEditStart, onEditEnd}) => {
+const RouteCalculationForm: React.FC<Props> = ({onEditStart, onEditEnd, start, end}) => {
     const {dispatch} = useContext<ReducerContext>(UserContext);
 
     const [routesFound, setRoutesFound] = useState<boolean>(false);
@@ -28,7 +30,7 @@ const RouteCalculationForm: React.FC<Props> = ({onEditStart, onEditEnd}) => {
                 <CO2FactCard/>
             </Box>
             <Box m={2} display={routesFound ? 'block' : 'none'}>
-                <RouteSelector onArrival={routesWereFound} dataFound={routesFound}/>
+                <RouteSelector start={start} end={end} onArrival={routesWereFound} dataFound={routesFound}/>
             </Box>
         </div>
     );

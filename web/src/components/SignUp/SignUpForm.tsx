@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react';
 import { Button, Grid } from '@material-ui/core';
 import Password from '../General/Entry/Password';
 import TextEntry from '../General/Entry/TextEntry';
-import { EMAIL_REGEX, ERRORS, ReducerContext, LOCALSTORAGE } from '@app/common';
+import {EMAIL_REGEX, ERRORS, ReducerContext, LOCALSTORAGE, USERNAME_REGEX} from '@app/common';
 import { UserContext } from '../../context/context';
 import STATE from '../../context/state';
 import CustomLink from '../General/Utility/CustomLink';
@@ -53,8 +53,10 @@ const SignUpForm = () => {
       currentErrors.username = ERRORS.GENERAL.BLANK;
     else if (username.length < 3)
       currentErrors.username = ERRORS.SIGNUP.USERNAME_SHORT;
-    else if (username.length > 10)
+    else if (username.length > 25)
       currentErrors.username = ERRORS.SIGNUP.USERNAME_LONG;
+    else if (!email.match(USERNAME_REGEX))
+      currentErrors.username = ERRORS.SIGNUP.USERNAME_INVALID;
     else currentErrors.username = '';
 
     //First Name errors
@@ -89,6 +91,7 @@ const SignUpForm = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (filterInput()) {
+      setInput({ ...input, username: input.username.toLowerCase() });
       axios
         .post('/api/user/signup', input)
         .then((res: any) => {
