@@ -16,8 +16,6 @@ const checkCreds = async (res: Response, email: string) => {
         .orderBy('routeLogs.date', 'DESC')
         .getOne();
 
-    console.log(user);
-
     if (!user)
       return {
         payload: {},
@@ -188,11 +186,11 @@ export const getOwnInfo = async (_req: Request, res: Response) => {
   try {
     // Gets User
     const user = await getRepository(User)
-        .createQueryBuilder('user')
-        .leftJoinAndSelect('user.routeLogs', 'routeLogs')
-        .where('user.id = :id', { id: res.locals.payload.id })
-        .orderBy('routeLogs.date', 'DESC')
-        .getOne();
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.routeLogs', 'routeLogs')
+      .where('user.id = :id', { id: res.locals.payload.id })
+      .orderBy('routeLogs.date', 'DESC')
+      .getOne();
 
     if (!user) throw new Error();
     delete user.password;

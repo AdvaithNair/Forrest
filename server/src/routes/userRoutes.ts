@@ -80,7 +80,11 @@ userRouter.put(
 );
 
 // Gets User by Username
-userRouter.get('/get/:username', userController.getUser);
+userRouter.get(
+  '/get/:username',
+  tokenController.validateUser,
+  userController.getUser
+);
 
 // Search User by Username
 userRouter.get('/search', userController.searchUser);

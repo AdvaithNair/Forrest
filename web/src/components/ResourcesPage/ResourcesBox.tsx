@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import React from 'react';
 import InfoCard from './InfoCard';
@@ -6,6 +6,12 @@ import InfoCard from './InfoCard';
 const ResourcesBox = () => {
   return (
     <Box boxShadow={4} bgcolor='background.paper' m={5} p={3} borderRadius={8}>
+      <Typography
+        color='textPrimary'
+        style={{ fontSize: 40, marginTop: 10, marginBottom: 20, fontWeight: 600 }}
+      >
+        RESOURCES
+      </Typography>
       <Grid
         container
         direction='row'

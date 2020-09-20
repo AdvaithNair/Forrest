@@ -38,11 +38,9 @@ const UserPage: React.FC<Props> = ({ match }) => {
         console.log(res.data);
         // Set User
         setUser(res.data);
-      })
-      .catch(() => {
-        history.push('/user-not-found');
       });
   }, []);
+
   return (
     <div>
       <BasicAppBar />

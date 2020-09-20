@@ -42,9 +42,6 @@ const App: React.FC = () => {
 
   // Persists User
   useEffect(() => {
-    // Scroll to Top
-    window.scrollTo(0, 0);
-
     // Sends API Request to Verify User
     axios
       .get('/api/user/')
@@ -67,7 +64,6 @@ const App: React.FC = () => {
 
   return (
     <div className='App'>
-      {animation && window.scrollTo(0, 0)}
       {animation && (
         <Animation style={{ display: animation ? 'flex' : 'none' }} />
       )}

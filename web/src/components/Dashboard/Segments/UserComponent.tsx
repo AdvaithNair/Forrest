@@ -186,7 +186,7 @@ const UserComponent: React.FC<Props> = ({ user }) => {
         <Grid item sm>
           <MainStats
             title={'Trees Planted'}
-            statistic={user.carbonSaved / 500}
+            statistic={parseFloat((user.carbonSaved / 500).toFixed(2))}
             color={green}
             units={user.carbonSaved / 500 === 1 ? 'tree' : 'trees'}
           >
@@ -196,7 +196,7 @@ const UserComponent: React.FC<Props> = ({ user }) => {
         <Grid item sm>
           <MainStats
             title={'CO2 Saved'}
-            statistic={user.carbonSaved}
+            statistic={parseFloat(user.carbonSaved.toFixed(2))}
             color={green}
             units={'lbs'}
           >

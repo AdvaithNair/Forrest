@@ -48,17 +48,29 @@ const Logs: React.FC = () => {
       >
         ROUTES
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{ marginTop: 20 }}>
         <Table>
-          <TableHead>
+          <TableHead style={{ backgroundColor: '#202020', color: 'white' }}>
             <TableRow>
-              <TableCell>Route</TableCell>
-              <TableCell align='right'>CO2 Saved</TableCell>
-              <TableCell align='right'>Energy Saved</TableCell>
-              <TableCell align='right'>Duration</TableCell>
-              <TableCell align='right'>Date</TableCell>
-              <TableCell align='right'>Vehicle</TableCell>
-              <TableCell align='right'>Verified</TableCell>
+              <TableCell style={{ color: 'white' }}>Route</TableCell>
+              <TableCell align='right' style={{ color: 'white' }}>
+                CO2 Saved (lbs)
+              </TableCell>
+              <TableCell align='right' style={{ color: 'white' }}>
+                Fuel/Energy Saved (gal/kWh)
+              </TableCell>
+              <TableCell align='right' style={{ color: 'white' }}>
+                Duration (min)
+              </TableCell>
+              <TableCell align='right' style={{ color: 'white' }}>
+                Date
+              </TableCell>
+              <TableCell align='right' style={{ color: 'white' }}>
+                Vehicle
+              </TableCell>
+              <TableCell align='right' style={{ color: 'white' }}>
+                Verified
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -67,13 +79,14 @@ const Logs: React.FC = () => {
                 <TableCell component='th' scope='row'>
                   {row.route}
                 </TableCell>
-                <TableCell align='right'>{row.carbonSaved}</TableCell>
+                <TableCell align='right'>{`${row.carbonSaved} lbs`}</TableCell>
                 <TableCell align='right'>
                   {row.carType === 'ELECTRIC'
-                    ? (row.carbonSaved / 52).toFixed(2)
-                    : (row.carbonSaved / 20).toFixed(2)}
+                    ? `${((row.carbonSaved / 52) * 60).toFixed(2)} kWh`
+                    : `${(row.carbonSaved / 20).toFixed(2)} gal`}
+                  }
                 </TableCell>
-                <TableCell align='right'>{`${row.estimatedDuration}m`}</TableCell>
+                <TableCell align='right'>{`${row.estimatedDuration} min`}</TableCell>
                 <TableCell align='right'>
                   {dayjs(row.date).format('MMM D, YYYY')}
                 </TableCell>
@@ -87,11 +100,16 @@ const Logs: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Grid container>
+      {state.user.routeLogs.length === 0 && (
+        <Typography style={{ marginTop: 10, color: 'red' }}>
+          No Routes Available
+        </Typography>
+      )}
+      {/* <Grid container>
         {state.user.routeLogs.map((element: RouteLog, index: number) => (
           <LogElement logData={element} key={index} />
         ))}
-      </Grid>
+      </Grid> */}
     </Box>
   );
 };
