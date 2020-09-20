@@ -9,7 +9,12 @@ import RouteLog from '../entities/routeLog';
 const checkCreds = async (res: Response, email: string) => {
   try {
     // Gets User by Email
-    const user = await User.findOne({ email });
+    const user = await getRepository(User)
+      .createQueryBuilder('user')
+      .innerJoinAndSelect('user.routeLogs', 'routeLogs')
+      .orderBy('routeLogs.date', 'DESC')
+      .where('email = :email', { email })
+      .getOne();
 
     if (!user)
       return {

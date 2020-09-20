@@ -70,10 +70,10 @@ const SignInForm = () => {
             type: STATE.SET_USER,
             payload: res.data
           });
+          console.log(res.data);
           clearLoading(dispatch);
 
           history.push('/');
-
         })
         .catch((error: AxiosError) => {
           console.log(error);
