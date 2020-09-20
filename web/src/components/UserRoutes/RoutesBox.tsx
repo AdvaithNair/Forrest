@@ -7,6 +7,10 @@ import RouteSelectionForm from "./RouteSelectionForm";
 import RouteCalculationForm from "./RouteCalculationSelectionForm";
 import CustomSnackbar from "../General/Utility/Snackbar";
 import axios from "../../utils/axios";
+import ConfirmationCard from "./RouteConfirmationCard";
+import {clearLoading, setLoading} from "../../context/loading";
+import STATE from "../../context/state";
+import { useHistory } from 'react-router-dom';
 
 interface RouteInfo {
     start: string;
@@ -24,6 +28,7 @@ function getSteps() {
 
 const UserRoutesBox = () => {
     const {state, dispatch} = useContext<ReducerContext>(UserContext);
+    const history = useHistory();
 
     const [input, setInput] = useState<RouteInfo>({
         start: "",
@@ -34,7 +39,7 @@ const UserRoutesBox = () => {
 
     const [readyToStart, setReadyToStart] = React.useState<boolean>(false);
 
-    const [activeStep, setActiveStep] = React.useState<number>(0);
+    const [activeStep, setActiveStep] = React.useState<number>(1);
     const steps = getSteps();
 
     const doNothing = () => {
@@ -48,6 +53,8 @@ const UserRoutesBox = () => {
             onEditEnd={(e: { target: { value: any; }; }) => setInput({...input, end: e.target.value})}/>;
     } else if (activeStep == 1) {
         stepContent = <RouteCalculationForm start={input.start} end={input.end}/>
+    } else if (activeStep == 2) {
+        stepContent = <ConfirmationCard/>
     } else {
         stepContent = 'Unknown stepIndex';
     }
@@ -61,6 +68,23 @@ const UserRoutesBox = () => {
             })
             .then((res: any) => {
 
+            })
+            .catch((error: any) => {
+                console.log(error);
+            });
+    };
+
+    const endRouteLog = () => {
+        axios
+            .put('/api/user/log/confirm', {
+                route: state.currentRoute.route
+            })
+            .then((res: any) => {
+                setLoading(dispatch);
+                dispatch({
+                    type: STATE.CLEAR_CURRENT_ROUTE
+                });
+                clearLoading(dispatch);
             })
             .catch((error: any) => {
                 console.log(error);
@@ -81,7 +105,9 @@ const UserRoutesBox = () => {
                 startRouteLog();
             }
         } else if (activeStep == 2) {
+            endRouteLog();
 
+            history.push('/');
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
