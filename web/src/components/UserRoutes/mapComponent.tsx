@@ -1,6 +1,6 @@
-import React from 'react'
-import {GoogleMap, LoadScript, Polyline} from '@react-google-maps/api';
-import {MAPS_API} from "@app/common";
+import { MAPS_API } from "@app/common";
+import { GoogleMap, LoadScript, Polyline } from '@react-google-maps/api';
+import React from 'react';
 
 const containerStyle = {
     height: '400px'

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import { BCRYPT_SALT, ERRORS, COOKIE_NAMES, BUCKET_URL } from '@app/common';
 import User from '../entities/user';
-import { getConnection } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import parseUser from '../utils/parseUser';
 import RouteLog from '../entities/routeLog';
 
@@ -143,7 +143,7 @@ export const signout = async (_req: Request, res: Response) => {
     res.clearCookie(COOKIE_NAMES.ACCESS);
 
     res.json({
-      message: 'Successfully Logged Out'
+      message: 'Successfully Signed Out'
     });
   } catch (error) {
     res.status(401).json({
@@ -256,6 +256,30 @@ export const linkSocialMedia = async (req: Request, res: Response) => {
   }
 };
 
+// Updates User Password
+export const updateUserPassword = async (req: Request, res: Response) => {
+  try {
+    const { id } = res.locals.payload;
+    const { oldPassword, newPassword } = req.body;
+
+    // Get User and Confirm Password
+    const user = await User.findOne(id);
+    if (!user) throw new Error(ERRORS.AUTH.USER_NOT_FOUND);
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+    if (!isPasswordValid) throw new Error(ERRORS.GENERAL.INVALID);
+
+    // Update Password
+    user.password = await bcrypt.hash(newPassword, BCRYPT_SALT);
+    user.save();
+
+    res.json({
+      message: 'Successfuly Updated Password'
+    });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 // User Drive Information Updates
 export const updateDriveInfo = async (req: Request, res: Response) => {
   try {
@@ -352,6 +376,51 @@ export const confirmRoute = async (req: Request, res: Response) => {
     console.log(error);
     res.status(400).json({
       error: ERRORS.LOG.CONFIRM
+    });
+  }
+};
+
+// Gets User With Username
+export const getUser = async (req: Request, res: Response) => {
+  try {
+    const { username } = req.params;
+
+    // Gets User
+    const user = await User.findOne({ where: { username } });
+    if (!user) throw new Error();
+
+    // Filter Output
+    delete user.password;
+    delete user.count;
+    delete user.role;
+
+    res.json(user);
+  } catch {
+    res.status(400).json({
+      error: ERRORS.AUTH.USER_NOT_FOUND
+    });
+  }
+};
+
+// Searches for Users
+export const searchUser = async (req: Request, res: Response) => {
+  try {
+    const { username } = req.query;
+    const queryLimit = 10;
+
+    // Gets Users
+    const users = await getRepository(User)
+      .createQueryBuilder("user")
+      .orderBy("user.username")
+      .select(['user.username', 'user.imageURL', 'user.carbonSaved'])
+      .where('user.username like :name', { name: `%${username}%` })
+      .limit(queryLimit)
+      .getMany();
+
+    res.json(users);
+  } catch {
+    res.status(400).json({
+      error: ERRORS.AUTH.USER_NOT_FOUND
     });
   }
 };

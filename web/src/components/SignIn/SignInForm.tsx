@@ -11,6 +11,7 @@ import CustomLink from '../General/Utility/CustomLink';
 import { AxiosError, AxiosResponse } from 'axios';
 import { setLoading, clearLoading } from '../../context/loading';
 import CustomSnackbar from '../General/Utility/Snackbar';
+import { useHistory } from 'react-router-dom';
 
 interface SignIn {
   email: string;
@@ -31,6 +32,7 @@ const SignInForm = () => {
   const [errors, setErrors] = useState<SignIn>(blankErrors);
   const [open, setOpen] = useState<string>('');
   const { dispatch } = useContext<ReducerContext>(UserContext);
+  const history = useHistory();
 
   const filterInput = () => {
     const { email, password } = input;
@@ -69,6 +71,9 @@ const SignInForm = () => {
             payload: res.data
           });
           clearLoading(dispatch);
+
+          history.push('/');
+
         })
         .catch((error: AxiosError) => {
           console.log(error);

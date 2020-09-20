@@ -3,12 +3,17 @@
 }
 
 .link {
-  color: #000081;
+  color: #7E8D2B;
 }
 
 .link:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.user-social {
+  width: 40px;
+  height: 40px;
 }
 
 .loading-body {
@@ -20,7 +25,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 2;
+  z-index: 4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,6 +40,8 @@
   width: 100vw;
   height: 100vh;
   position: absolute;
+  top: 0;
+  left: 0;
   background: black;
   display: flex;
   align-items: center;
@@ -42,11 +49,61 @@
   z-index: 1;
 }
 
+.landing-logo {
+  width: 70%;
+  margin-top: -100px;
+}
+
 .landing-icon {
   width: 200px;
   height: 200px;
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
+}
+
+.down-button {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin: 0 auto;
+  margin-left: -30px;
+  margin-bottom: 40px;
+  border-radius: 50%;
+  transition: .2s ease;
+  -webkit-animation: fadeIn 2s;
+  animation: fadeIn 2s;
+}
+
+.down-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+.landing-main {
+  display: block;
+  align-items: none;
+  justify-content: none;
+}
+
+.auth-logo {
+  background: black;
+  margin-left: -32px;
+  margin-right: -32px;
+  margin-top: -32px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.auth-logo img {
+  margin-top: 10px;
+  margin-bottom: -20px;
+}
+
+.card-section {
+  background: white;
+  width: 100vw;
+  margin-top: -25px;
 }
 
 .fade-animation {

@@ -1,5 +1,4 @@
 import { ReducerContext } from '@app/common';
-import { ThemeProvider } from '@material-ui/core/styles';
 import { AxiosResponse } from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import 'react-dropzone-uploader/dist/styles.css';
@@ -13,9 +12,11 @@ import Index from './pages/Index';
 import ResourcesPage from './pages/ResourcesPage';
 import SettingsPage from './pages/SettingsPage';
 import axios from './utils/axios';
-import theme from './utils/theme';
 import DashboardPage from './pages/DashboardPage';
 import RoutesPage from './pages/RoutesPage';
+import Landing from './components/Landing/Landing';
+import AuthRoute from './components/General/Utility/AuthRoute';
+import NotFound from './components/General/Utility/NotFound';
 
 const App: React.FC = () => {
   const [animation, setAnimation] = useState<boolean>(true);
@@ -23,24 +24,42 @@ const App: React.FC = () => {
   const history = useHistory();
 
   const autoSignin = () => {
+    console.log('hit');
     // Sends API Request to Verify User
     axios
       .get('/api/user/')
       .then((res: AxiosResponse) => {
+        console.log('hit2');
         // Sets State
         dispatch({ type: STATE.SET_USER, payload: res.data });
+        history.push('/');
       })
       .catch(() => {
         // Logout Code
         dispatch({ type: STATE.CLEAR_USER });
-        history.push('/');
       });
   };
 
   // Persists User
   useEffect(() => {
-    autoSignin();
+    // Sends API Request to Verify User
+    axios
+      .get('/api/user/')
+      .then((res: AxiosResponse) => {
+        console.log('hit2');
+        // Sets State
+        dispatch({ type: STATE.SET_USER, payload: res.data });
+        // history.push('/');
+      })
+      .catch(() => {
+        // Logout Code
+        dispatch({ type: STATE.CLEAR_USER });
+      });
+
     setTimeout(() => setAnimation(false), 1950);
+    return () => {
+      setAnimation(false);
+    };
   }, []);
 
   return (
@@ -49,15 +68,15 @@ const App: React.FC = () => {
         <Animation style={{ display: animation ? 'flex' : 'none' }} />
       )}
       {state.loading && <Loading />}
-      <ThemeProvider theme={theme}>
-        <Switch>
-          <Route path='/' component={Index} exact />
-          <Route path='/settings' component={SettingsPage} exact />
-          <Route path='/resources' component={ResourcesPage} exact />
-          <Route path='/dashboard' component={DashboardPage} exact />
-          <Route path='/routes' component={RoutesPage} exact />
-        </Switch>
-      </ThemeProvider>
+      <Switch>
+        <Route path='/' component={Index} exact />
+        <Route path='/enter' component={Landing} exact />
+        <AuthRoute path='/settings' component={SettingsPage} exact />
+        <AuthRoute path='/resources' component={ResourcesPage} exact />
+        <AuthRoute path='/dashboard' component={DashboardPage} exact />
+        <AuthRoute path='/routes' component={RoutesPage} exact />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   );
 };

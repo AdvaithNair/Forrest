@@ -9,12 +9,14 @@ import { PROJECT_NAME } from '@app/common';
 const SignUpBox = () => {
   return (
     <Box boxShadow={4} bgcolor='background.paper' m={4} p={4} borderRadius={8}>
-      <img
-        width='250'
-        src={Logo}
-        alt='Forrest'
-        style={{ paddingBottom: '10px' }}
-      />
+      <div className='auth-logo'>
+        <img
+          width='250'
+          src={Logo}
+          alt='Forrest'
+          style={{ paddingBottom: '16px' }}
+        />
+      </div>
       <Grid
         container
         direction='row'

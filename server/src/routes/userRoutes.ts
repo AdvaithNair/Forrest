@@ -51,6 +51,13 @@ userRouter.put(
   userController.linkSocialMedia
 );
 
+// Update User Password
+userRouter.put(
+  '/update/password',
+  tokenController.validateUser,
+  userController.updateUserPassword
+);
+
 // Update Drive Info
 userRouter.put(
   '/update/drive',
@@ -58,17 +65,24 @@ userRouter.put(
   userController.updateDriveInfo
 );
 
-// Add to Log of UserRoutes Taken
+// Add to Log of User Routes Taken
 userRouter.post(
   '/log/add',
   tokenController.validateUser,
   userController.addRoute
 );
 
+// Confirms Route Was Taken
 userRouter.put(
   '/log/confirm',
   tokenController.validateUser,
   userController.confirmRoute
 );
+
+// Gets User by Username
+userRouter.get('/get/:username', userController.getUser);
+
+// Search User by Username
+userRouter.get('/search', userController.searchUser);
 
 export default userRouter;
