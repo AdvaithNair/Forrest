@@ -138,7 +138,7 @@ const HomePage: React.FC = () => {
           }}
           onClick={toAuth}
         >
-          Join Forrest
+          Enter Forrest
         </Button>
       </div>
     </div>
