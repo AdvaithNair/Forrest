@@ -8,6 +8,8 @@ import BasicMap from "./mapComponent";
 import EcoIcon from '@material-ui/icons/Eco';
 import SpeedIcon from '@material-ui/icons/Speed';
 import DirectionBar from "./directionsBar";
+import {clearLoading, setLoading} from "../../context/loading";
+import STATE from "../../context/state";
 
 interface Props {
     onArrival: any;
@@ -46,11 +48,35 @@ const RouteSelector: React.FC<Props> = ({onArrival, dataFound, start, end}) => {
     const useEco = () => {
         setDirectionIndex(0);
         setEcoRoute(true);
+        setLoading(dispatch);
+        dispatch({
+            type: STATE.SET_CURRENT_ROUTE,
+            payload: {
+                route: input.bestEfficiency.route,
+                co2saved: (Math.abs(input.fastestRoute.fuelEfficiency - input.bestEfficiency.fuelEfficiency) * (state.user.carType == CAR_TYPES.ELECTRIC ? CO2EMISSIONS.ELECTRIC : CO2EMISSIONS.GAS)).toFixed(2),
+                duration: input.bestEfficiency.duration,
+                startingLoc: input.bestEfficiency.latLon![0],
+                endingLoc: input.bestEfficiency.latLon![input.bestEfficiency.latLon!.length-1]
+            }
+        });
+        clearLoading(dispatch);
     };
 
     const useFast = () => {
         setDirectionIndex(0);
         setEcoRoute(false);
+        setLoading(dispatch);
+        dispatch({
+            type: STATE.SET_CURRENT_ROUTE,
+            payload: {
+                route: input.fastestRoute.route,
+                co2saved: 0,
+                duration: input.fastestRoute.duration,
+                startingLoc: input.fastestRoute.latLon![0],
+                endingLoc: input.fastestRoute.latLon![input.fastestRoute.latLon!.length-1]
+            }
+        });
+        clearLoading(dispatch);
     };
 
     const [input, setInput] = useState<RouteInfo>({
@@ -101,6 +127,11 @@ const RouteSelector: React.FC<Props> = ({onArrival, dataFound, start, end}) => {
                 }
             })
             .then((res: any) => {
+                setLoading(dispatch);
+                dispatch({
+                    type: STATE.CLEAR_CURRENT_ROUTE
+                });
+                clearLoading(dispatch);
                 // Set State Here
                 onArrival();
                 console.log(res.data);

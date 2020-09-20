@@ -1,15 +1,21 @@
-import {ERRORS, ReducerContext} from '@app/common';
+import {ReducerContext} from '@app/common';
 import {Button, Step, StepLabel, Stepper, Typography} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import React, {useContext, useState} from 'react';
 import {UserContext} from '../../context/context';
-import LanguageIcon from '@material-ui/icons/Language';
 import RouteSelectionForm from "./RouteSelectionForm";
 import RouteCalculationForm from "./RouteCalculationSelectionForm";
+import CustomSnackbar from "../General/Utility/Snackbar";
+import axios from "../../utils/axios";
 
 interface RouteInfo {
     start: string;
     end: string;
+}
+
+interface ChosenRoute {
+    name: string;
+    CO2Saved: string;
 }
 
 function getSteps() {
@@ -24,8 +30,9 @@ const UserRoutesBox = () => {
         end: ""
     });
 
-    const [readyToStart, setReadyToStart] = React.useState<boolean>(false);
+    const [open, setOpen] = useState<string>('');
 
+    const [readyToStart, setReadyToStart] = React.useState<boolean>(false);
 
     const [activeStep, setActiveStep] = React.useState<number>(0);
     const steps = getSteps();
@@ -40,19 +47,40 @@ const UserRoutesBox = () => {
             onEditStart={(e: { target: { value: any; }; }) => setInput({...input, start: e.target.value})}
             onEditEnd={(e: { target: { value: any; }; }) => setInput({...input, end: e.target.value})}/>;
     } else if (activeStep == 1) {
-        stepContent = <RouteCalculationForm start={input.start} end={input.end} onEditStart={doNothing} onEditEnd={doNothing}/>
+        stepContent = <RouteCalculationForm start={input.start} end={input.end}/>
     } else {
         stepContent = 'Unknown stepIndex';
     }
 
-    console.log(input);
+    const startRouteLog = () => {
+        axios
+            .post('/api/user/log/add', {
+                route: state.currentRoute.route,
+                carbonSaved: state.currentRoute.co2saved,
+                estimatedDuration: state.currentRoute.duration
+            })
+            .then((res: any) => {
+
+            })
+            .catch((error: any) => {
+                console.log(error);
+            });
+    };
 
     const handleNext = () => {
         if (activeStep == 0) {
-            if (input.start === '' || input.start === undefined || input.end === '' || input.end === undefined  ){
+            if (input.start === '' || input.start === undefined || input.end === '' || input.end === undefined) {
                 return;
             }
         } else if (activeStep == 1) {
+            console.log(state.currentRoute);
+            if (!state.currentRoute.route) {
+                setOpen("Make sure to click on the chosen route");
+                return;
+            } else {
+                startRouteLog();
+            }
+        } else if (activeStep == 2) {
 
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -64,12 +92,14 @@ const UserRoutesBox = () => {
 
     const startRoute = () => {
         setReadyToStart(true)
-    }
+    };
 
     const handleReset = () => {
         setActiveStep(0);
         setReadyToStart(false);
-        setInput({start: "", end: ""})
+        setInput({
+            start: "", end: ""
+        })
     };
 
     return (
@@ -96,9 +126,9 @@ const UserRoutesBox = () => {
                                 >
                                     Back
                                 </Button>
-                                    <Button variant="contained" color="primary" onClick={handleNext}>
-                                        {activeStep === steps.length - 1 ? 'Finish' : activeStep === steps.length - 2 ? 'Begin' : 'Calculate'}
-                                    </Button>
+                                <Button variant="contained" color="primary" onClick={handleNext}>
+                                    {activeStep === steps.length - 1 ? 'Finish' : activeStep === steps.length - 2 ? 'Begin' : 'Calculate'}
+                                </Button>
                                 <Button onClick={handleReset}>Reset</Button>
                             </div>
                             {stepContent}
@@ -106,6 +136,7 @@ const UserRoutesBox = () => {
                     )}
                 </div>
             </div>
+            <CustomSnackbar openStr={open}/>
         </Box>
     );
 };
