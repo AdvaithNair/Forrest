@@ -82,6 +82,50 @@ export const reducer = (state: any, action: any) => {
         ...state,
         currentRoute: initialState.currentRoute
       };
+    case STATE.ADD_ROUTE:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          routeLogs: [
+            {
+              userID: action.payload.userID,
+              route: action.payload.route,
+              date: action.payload.date,
+              carType: action.payload.carType,
+              avgHighwayOver: action.payload.avgHighwayOver,
+              avgCityOver: action.payload.avgCityOver,
+              carbonSaved: action.payload.carbonSaved,
+              estimatedDuration: action.payload.estimatedDuration,
+              verified: action.payload.verified
+            },
+            ...state.user.routeLogs
+          ]
+        }
+      };
+    case STATE.CONFIRM_ROUTE:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          routesTaken: state.user.routesTaken + 1,
+          carbonSaved: state.user.carbonSaved + action.payload.carbonSaved,
+          routeLogs: [
+            {
+              userID: action.payload.userID,
+              route: action.payload.route,
+              date: action.payload.date,
+              carType: action.payload.carType,
+              avgHighwayOver: action.payload.avgHighwayOver,
+              avgCityOver: action.payload.avgCityOver,
+              carbonSaved: action.payload.carbonSaved,
+              estimatedDuration: action.payload.estimatedDuration,
+              verified: action.payload.verified
+            },
+            ...state.user.routeLogs
+          ]
+        }
+      };
     default:
       return state;
   }

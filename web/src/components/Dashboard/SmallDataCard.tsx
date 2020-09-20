@@ -84,11 +84,16 @@ const SmallDataCard: React.FC<Props> = ({
           >
             {iconType}
           </Avatar>
-          <Typography color='textPrimary' gutterBottom style={{marginTop: 10, fontSize: 20}}>
+          <Typography
+            color='textPrimary'
+            gutterBottom
+            style={{ marginTop: 10, fontSize: 20 }}
+          >
             {title}
           </Typography>
           <Typography color='textSecondary' gutterBottom>
-            {data} / {max} {unit}
+            {parseFloat(data.toString()).toFixed(2)} /{' '}
+            {parseFloat(max.toString()).toFixed(2)} {unit}
           </Typography>
           <LinearProgressWithLabel
             value={normalise({ value: data })}
