@@ -171,7 +171,12 @@ export const updateUser = async (req: Request, res: Response) => {
 
     // Save User
     await User.save({ ...req.body, id });
-    const user = await User.findOne(id);
+    const user = await getRepository(User)
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.routeLogs', 'routeLogs')
+      .where('user.id = :id', { id })
+      .orderBy('routeLogs.date', 'DESC')
+      .getOne();
 
     res.json(user);
   } catch {
@@ -245,7 +250,12 @@ export const linkSocialMedia = async (req: Request, res: Response) => {
     const { id } = res.locals.payload;
     const { provider, username } = req.body;
 
-    const user = await User.findOne(id);
+    const user = await getRepository(User)
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.routeLogs', 'routeLogs')
+      .where('user.id = :id', { id })
+      .orderBy('routeLogs.date', 'DESC')
+      .getOne();
     if (!user) throw new Error();
 
     // Set URL
@@ -303,7 +313,12 @@ export const updateDriveInfo = async (req: Request, res: Response) => {
     const { parameters } = req.body;
 
     // Get User
-    const user = await User.findOne(id);
+    const user = await getRepository(User)
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.routeLogs', 'routeLogs')
+      .where('user.id = :id', { id })
+      .orderBy('routeLogs.date', 'DESC')
+      .getOne();
     if (!user) throw new Error();
 
     // Parse Parameters and Update
