@@ -27,7 +27,7 @@ interface Props {
 const CardComponent: React.FC<Props> = ({ title, body, children }) => {
   return (
     <Box m={2} style={{ position: 'relative', minWidth: '290px' }}>
-      <Card style={{ height: 300, background: '#DDDDDD', padding: 20 }}>
+      <Card style={{ height: 380, background: '#DDDDDD', padding: 20 }}>
         {children}
         <CardContent>
           <Typography color='textPrimary' gutterBottom style={{ fontSize: 25 }}>
