@@ -33,7 +33,8 @@ export const ERRORS = {
     EMAIL_USERNAME_IN_USE: 'Email or Username Already In Use',
     UNABLE: 'Unable To Sign Up User',
     USERNAME_SHORT: 'Username Too Short',
-    USERNAME_LONG: 'Username Too Long'
+    USERNAME_LONG: 'Username Too Long',
+    USERNAME_INVALID: 'Username Contains Invalid Characters'
   },
   SIGNIN: {
     USER_NONEXISTENT: 'User Does Not Exist'
@@ -44,19 +45,25 @@ export const ERRORS = {
   },
   UPDATE_USER: {
     UNABLE: 'Unable To Update User',
-    SOCIAL_MEDIA: 'Unable To Update Social Media'
+    SOCIAL_MEDIA: 'Unable To Update Social Media',
+    DRIVE_INFO: 'Unable To Update Drive Info'
   },
   FILE_UPLOAD: {
     NO_FILE: 'Please Upload File',
     FILENAME: 'Invalid File Name'
+  },
+  LOG: {
+    CREATE: 'Unable to Create Route Entry',
+    CONFIRM: 'Unable to Confirm Route Entry',
+    NOT_FOUND: 'Route Entry Not Found'
   }
 };
 
 export const COLORS = {
   PRIMARY: '#7E8D2B',
-  SECONDARY: '#5E3900',
+  SECONDARY: '#005B13',
   BUBBLY_START: '#7E8D2B',
-  BUBBLY_STOP: '#5E3900'
+  BUBBLY_STOP: '#005B13'
 };
 
 export const LOCALSTORAGE = {
@@ -66,3 +73,25 @@ export const LOCALSTORAGE = {
 export const FILE_UPLOADS = {
   PROFILE_PICTURE: 'profile-picture'
 };
+
+// User Defaults for Drive Settings
+export const USER_DRIVE_DEFAULTS = {
+  VEHICLE_TYPE: 'SEDAN',
+  AVERAGE_MPH_OVER_HIGHWAY: 3,
+  AVERAGE_MPH_OVER_CITY: 0
+};
+
+// Car Types for Forrest
+export const CAR_TYPES = {
+  SEDAN: 'SEDAN',
+  HYBRID_SEDAN: 'HYBRID_SEDAN',
+  TRUCK: 'TRUCK',
+  VAN: 'VAN',
+  SUV: 'SUV',
+  MOTORCYCLE: 'MOTORCYCLE',
+  ELECTRIC: 'ELECTRIC'
+};
+
+export const CARBON_SAVINGS = {
+  CARBON_PER_TREE: 500
+}

@@ -7,4 +7,9 @@ exports.JWT_CRYPTO = {
 exports.CRYPTO_JS_SECRETS = {
     USER_DATA: 'xoEV2fjTu3Dn6LBuKLHpUv6-OIlZabhrqe8ct5tAcZwfp3m6JAhgdY6qsVAHIo-BFyQfJiy6Ux04cKlEAxjaRDmhAj7htcLssmUR1GpbhIfQhcrRni6H8iuDMB6ZZPEfz1-X_wBCoXD8Jm0K4GIlRvYkPZgH0KIagLbNrrZPYYE'
 };
+exports.MAPS_API = {
+    KEY: 'AIzaSyB7rdgDneAwZCMhe6PXg2KwAolFSDEQ4-w',
+    ROUTE: 'https://maps.googleapis.com/maps/api/directions/json',
+    SNAP_ROUTE: 'https://roads.googleapis.com/v1/snapToRoads'
+};
 //# sourceMappingURL=secrets.js.map

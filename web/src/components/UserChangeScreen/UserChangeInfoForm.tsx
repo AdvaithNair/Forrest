@@ -24,6 +24,7 @@ interface UserInfo {
   general?: string;
 }
 
+
 const blankErrors: UserInfo = {
   email: '',
   username: '',
@@ -165,7 +166,7 @@ const UserChangeInfoForm = () => {
         name={'email'}
       />
       <Button type='submit' fullWidth variant='contained' color='primary'>
-        Submit Changes
+        Update User Information
       </Button>
       <CustomSnackbar openStr={open}> </CustomSnackbar>
     </form>

@@ -7,4 +7,5 @@ exports.HELLO = 'WORLD';
 __export(require("./constants"));
 __export(require("./objects"));
 __export(require("./secrets"));
+__export(require("./stats"));
 //# sourceMappingURL=index.js.map

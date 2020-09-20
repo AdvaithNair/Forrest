@@ -1,5 +1,5 @@
 import Box from '@material-ui/core/Box';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Grid,
   Typography,
@@ -17,6 +17,7 @@ import { ReducerContext } from '@app/common';
 import { UserContext } from '../../context/context';
 import STATE from '../../context/state';
 import { setLoading, clearLoading } from '../../context/loading';
+import TextEntryValued from "../General/Entry/FilledTextEntry";
 
 interface Props {
   logo: any;
@@ -24,6 +25,8 @@ interface Props {
   width: number;
   height: number;
   imgHeight: number;
+  backgroundColor: string;
+  defaultInput: string;
 }
 
 const SocialMediaBar: React.FC<Props> = ({
@@ -31,11 +34,13 @@ const SocialMediaBar: React.FC<Props> = ({
   text,
   width,
   height,
-  imgHeight
+  imgHeight,
+    backgroundColor,
+    defaultInput
 }) => {
   const [open, setOpen] = React.useState(false);
-  const [input, setInput] = React.useState('');
-  const { dispatch } = useContext<ReducerContext>(UserContext);
+  const [input, setInput] = useState<any>(defaultInput ? defaultInput : '');
+  const { state, dispatch } = useContext<ReducerContext>(UserContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -58,11 +63,24 @@ const SocialMediaBar: React.FC<Props> = ({
         console.log(error);
       });
   };
-
+  const handleClear = () => {
+    axios
+        .put('/api/user/update/social-media', { provider: text, username: null })
+        .then((res: AxiosResponse) => {
+          setLoading(dispatch);
+          dispatch({ type: STATE.SET_USER, payload: res.data });
+          clearLoading(dispatch);
+          setOpen(false);
+        })
+        .catch((error: AxiosError) => {
+          console.log(error);
+        });
+  };
   return (
     <Box
       boxShadow={4}
-      bgcolor='background.paper'
+      border={2}
+      borderColor={backgroundColor=='default' ? 'background.paper' : backgroundColor}
       m={1}
       p={0}
       height={height}
@@ -81,19 +99,25 @@ const SocialMediaBar: React.FC<Props> = ({
             Please enter your username below
           </DialogContentText>
           <Box width={'250px'}>
-            <TextEntry
+            <TextEntryValued
               onChange={e => setInput(e.target.value)}
               helperText={'Enter your username here'}
               label={text}
               required={true}
               fullWidth={true}
               error={false}
+              innerStr={input}
+              small={false}
+              name={text}
             />
           </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color='secondary'>
             Cancel
+          </Button>
+          <Button onClick={handleClear} color='secondary'>
+            Remove
           </Button>
           <Button onClick={handleSubmit} color='primary'>
             Submit

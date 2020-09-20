@@ -7,9 +7,23 @@ export interface User {
 export interface GlobalState {
     authenticated: boolean;
     loading: boolean;
+    homePage: boolean;
     isSignup: boolean;
     darkMode: boolean;
+    currentRoute: CurrentRoute;
+    currentPage: string;
     user: UserCredentials;
+}
+export interface CurrentRoute {
+    route: string;
+    co2saved: number;
+    duration: number;
+    startingLoc: DataPoints;
+    endingLoc: DataPoints;
+}
+export interface DataPoints {
+    lat: number;
+    lng: number;
 }
 export interface ReducerContext {
     state: GlobalState;
@@ -22,17 +36,25 @@ export interface UserCredentials {
     firstName: string;
     lastName: string;
     imageURL: string;
+    facebook: string;
+    instagram: string;
+    twitter: string;
+    snapchat: string;
+    carType: string;
+    avgHighwayOver: number;
+    avgCityOver: number;
+    carbonSaved: number;
+    routesTaken: number;
+    routeLogs: RouteLog[];
 }
-export interface AxiosResponse {
-    data: any;
+export interface RouteLog {
+    userID: number;
+    route: string;
+    date: string;
+    carType: string;
+    avgHighwayOver: number;
+    avgCityOver: number;
+    carbonSaved: number;
+    estimatedDuration: number;
+    verified: boolean;
 }
-export interface AxiosError {
-    response: AxiosErrorData;
-}
-interface AxiosErrorData {
-    data: AxiosErrorMessage;
-}
-interface AxiosErrorMessage {
-    error: string;
-}
-export {};

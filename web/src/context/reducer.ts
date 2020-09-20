@@ -57,6 +57,75 @@ export const reducer = (state: any, action: any) => {
         ...state,
         darkMode: !state.darkMode
       };
+    case STATE.SET_VIEW_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload
+      };
+    case STATE.VIEW_HOME_PAGE:
+      return {
+        ...state,
+        homePage: true
+      };
+    case STATE.VIEW_WEB_APP:
+      return {
+        ...state,
+        homePage: false
+      };
+    case STATE.SET_CURRENT_ROUTE:
+      return {
+        ...state,
+        currentRoute: action.payload
+      };
+    case STATE.CLEAR_CURRENT_ROUTE:
+      return {
+        ...state,
+        currentRoute: initialState.currentRoute
+      };
+    case STATE.ADD_ROUTE:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          routeLogs: [
+            {
+              userID: action.payload.userID,
+              route: action.payload.route,
+              date: action.payload.date,
+              carType: action.payload.carType,
+              avgHighwayOver: action.payload.avgHighwayOver,
+              avgCityOver: action.payload.avgCityOver,
+              carbonSaved: action.payload.carbonSaved,
+              estimatedDuration: action.payload.estimatedDuration,
+              verified: action.payload.verified
+            },
+            ...state.user.routeLogs
+          ]
+        }
+      };
+    case STATE.CONFIRM_ROUTE:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          routesTaken: state.user.routesTaken + 1,
+          carbonSaved: state.user.carbonSaved + action.payload.carbonSaved,
+          routeLogs: [
+            {
+              userID: action.payload.userID,
+              route: action.payload.route,
+              date: action.payload.date,
+              carType: action.payload.carType,
+              avgHighwayOver: action.payload.avgHighwayOver,
+              avgCityOver: action.payload.avgCityOver,
+              carbonSaved: action.payload.carbonSaved,
+              estimatedDuration: action.payload.estimatedDuration,
+              verified: action.payload.verified
+            },
+            ...state.user.routeLogs
+          ]
+        }
+      };
     default:
       return state;
   }

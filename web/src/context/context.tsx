@@ -1,6 +1,11 @@
 import React, { createContext, useReducer, useMemo } from 'react';
 import { reducer } from './reducer';
-import { GlobalState, ReducerContext } from '@app/common';
+import {
+  GlobalState,
+  ReducerContext,
+  BUCKET_URL,
+  USER_DRIVE_DEFAULTS
+} from '@app/common';
 
 // Initial State Object
 export const initialState: GlobalState = {
@@ -8,14 +13,38 @@ export const initialState: GlobalState = {
   loading: false,
   isSignup: false,
   darkMode: true,
+  homePage: true,
+  currentRoute: {
+    route: '',
+    co2saved: 0,
+    duration: 0,
+    startingLoc: {
+      lat: 0,
+      lng: 0
+    },
+    endingLoc: {
+      lat: 0,
+      lng: 0
+    }
+  },
+  currentPage: 'dashboard',
   user: {
     id: -1,
     email: '',
     username: '',
     firstName: '',
     lastName: '',
-    imageURL:
-      'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg'
+    imageURL: `${BUCKET_URL}/uploads/profile-picture/Default.png`,
+    facebook: '',
+    instagram: '',
+    twitter: '',
+    snapchat: '',
+    carType: USER_DRIVE_DEFAULTS.VEHICLE_TYPE,
+    avgHighwayOver: USER_DRIVE_DEFAULTS.AVERAGE_MPH_OVER_HIGHWAY,
+    avgCityOver: USER_DRIVE_DEFAULTS.AVERAGE_MPH_OVER_CITY,
+    carbonSaved: 0,
+    routesTaken: 0,
+    routeLogs: []
   }
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Snackbar, SnackbarContent } from '@material-ui/core';
 
 interface Props {
@@ -7,6 +7,10 @@ interface Props {
 
 const CustomSnackbar: React.FC<Props> = ({ openStr }) => {
   const [open, setOpen] = useState<string>(openStr);
+
+  useEffect(() => {
+      setOpen(openStr);
+  },[openStr]);
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === 'clickaway') {

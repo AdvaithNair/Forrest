@@ -26,19 +26,19 @@ const TextEntryValued: React.FC<Props> = ({
 }) => {
   return (
     <TextField
-      label={label}
-      type={'text'}
-      onChange={onChange}
-      error={error}
-      helperText={helperText}
-      variant='outlined'
-      margin='normal'
-      fullWidth={fullWidth}
-      required={required}
-      defaultValue={innerStr}
-      name={name}
-      size={small ? 'small' : 'medium'}
-    ></TextField>
+    label={label}
+    type={'text'}
+    onChange={onChange}
+    error={error}
+    helperText={helperText}
+    variant='outlined'
+    margin='normal'
+    fullWidth={fullWidth}
+    required={required}
+    defaultValue={innerStr}
+    name={name}
+    size={small ? 'small' : 'medium'}
+    />
   );
 };
 

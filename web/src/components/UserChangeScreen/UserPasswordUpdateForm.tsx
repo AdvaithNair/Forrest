@@ -45,8 +45,6 @@ const UserPasswordUpdateForm = () => {
     // Password Errors
     if (oldPassword === '' || oldPassword === undefined)
       currentErrors.oldPassword = ERRORS.GENERAL.BLANK;
-    //else if (password.length < 6)
-    //currentErrors.password = ERRORS.GENERAL.PASSWORD_SHORT;
     else currentErrors.oldPassword = '';
 
     // Password Errors
@@ -64,16 +62,12 @@ const UserPasswordUpdateForm = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (filterInput()) {
-      axios //NEED ROUTE
-        .put('', input)
+      axios
+        .put('/api/user/update/password', input)
         .then((res: any) => {
           // Set State Here
-          setLoading(dispatch);
-          dispatch({
-            type: STATE.SET_USER,
-            payload: res.data
-          });
-          clearLoading(dispatch);
+          console.log(res.data);
+          setOpen(res.data.message);
         })
         .catch((error: any) => {
           console.log(error);
@@ -94,22 +88,22 @@ const UserPasswordUpdateForm = () => {
         <SmallPassword
           error={Boolean(errors.oldPassword)}
           onChange={e => setInput({ ...input, oldPassword: e.target.value })}
-          helperText={''}
+          helperText={Boolean(errors.oldPassword) ? errors.oldPassword : ''}
           fullWidth={true}
           required={true}
           label={'Old Password'}
         />
         <SmallPassword
-          error={Boolean(errors.oldPassword)}
-          onChange={e => setInput({ ...input, oldPassword: e.target.value })}
-          helperText={'Insert a new password & be careful'}
+          error={Boolean(errors.newPassword)}
+          onChange={e => setInput({ ...input, newPassword: e.target.value })}
+          helperText={Boolean(errors.newPassword) ? errors.newPassword : 'Insert a new password & be careful'}
           fullWidth={true}
           required={true}
           label={'New Password'}
         />
       </Grid>
       <Button type='submit' fullWidth variant='contained' color='primary'>
-        Change Password
+        Update Password
       </Button>
       <CustomSnackbar openStr={open}> </CustomSnackbar>
     </form>
